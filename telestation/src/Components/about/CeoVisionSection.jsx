@@ -1,88 +1,75 @@
 import React from "react";
 
-const teamMembers = [
-  {
+export default function CeoVisionSection() {
+  const person = {
     name: "Riveen",
     role: "Managing Director",
-    image: "/image/manager1.jpeg", 
-  },
-  {
-    name: "Nihal",
-    role: "Director",
-    image: "/image/manger2.jpeg",
-  },
-  {
-    name: "Sabil",
-    role: "Director",
-    image: "/image/manger3.jpg",
-  },
-  {
-    name: "Haseer",
-    role: "Director",
-    image: "/image/manger3.jpg",
-  },
-   {
-    name: "Ijas",
-    role: "Director",
-    image: "/image/manger3.jpg",
-  },
-];
+    image: "/image/manager1.jpeg",
+  };
 
-const CeoVisionSection = () => {
   return (
-    <section className="w-full bg-[#0a0a0a] pt-6 pb-12 sm:py-16 px-4">
+    <section className="w-full bg-[#0a0a0a] py-10 md:py-16 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Main heading */}
-        <h2 className="text-center text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-10">
-          Meet the Leadership Team
-        </h2>
+        <h2 className="text-center text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-10 md:mb-14">
+  Leadership Behind Telestation
+</h2>
 
-        {/* Optional subtext */}
-        {/* <p className="text-center text-gray-400 max-w-2xl mx-auto mb-10 text-sm md:text-base">
-          A team of thinkers, builders, and leaders driving the brand forward.
-        </p> */}
 
-        {/* Cards row like the reference image */}
-        <div className="grid gap-4 sm:gap-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
-          {teamMembers.map((member) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* LEFT */}
+          <div className="relative mx-auto w-full max-w-[560px] lg:max-w-[620px]">
+            {/* Image */}
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.7)]">
+              <img
+                src={person.image}
+                alt={person.name}
+                className="w-full h-[380px] sm:h-[460px] md:h-[560px] object-cover grayscale"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/20" />
+            </div>
+
+            {/* Overlay card (bottom-right, clean alignment) */}
             <div
-              key={member.name}
               className="
-                relative
-                bg-black
-                rounded-2xl
-                overflow-hidden
-                border border-white/10
-                shadow-[0_18px_40px_rgba(0,0,0,0.7)]
-                transition-transform duration-300 ease-out
-                hover:-translate-y-1 hover:shadow-[0_22px_55px_rgba(0,0,0,0.9)]
+                absolute
+                right-4 sm:right-6
+                bottom-4 sm:bottom-6
+                w-[85%] sm:w-[72%] md:w-[62%]
               "
             >
-              {/* Image */}
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-72 md:h-80 lg:h-80 object-cover"
-              />
-
-              {/* Dark gradient overlay at bottom for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-              {/* Name + role in bottom-left (like the sample image) */}
-              <div className="absolute bottom-4 left-4">
-                <p className="text-white text-sm md:text-base font-semibold">
-                  {member.name}
+              <div className="bg-white/6 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-5 sm:px-6 sm:py-6 shadow-[0_18px_50px_rgba(0,0,0,0.65)]">
+                <p className="text-white/70 text-sm sm:text-base mb-1">
+                  Managing Director of
                 </p>
-                <p className="text-white/85 text-xs md:text-sm">
-                  {member.role}
-                </p>
+                <h3 className="text-white text-2xl sm:text-3xl font-bold tracking-tight">
+                  TSPL
+                </h3>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* RIGHT */}
+          <div className="text-white w-full max-w-[640px] mx-auto lg:mx-0">
+            <p className="text-white/85 italic leading-relaxed text-base md:text-lg lg:text-xl">
+              Riveen’s journey wasn’t built on shortcuts. He believes in
+              consistency, clarity, and long-term value creation. Over the
+              years, he has helped shape the brand with a people-first mindset,
+              strong operational discipline, and a vision that keeps evolving
+              with the market. His leadership focuses on building trust,
+              empowering teams, and turning challenges into growth—while keeping
+              the brand’s standards uncompromising.
+            </p>
+
+            <div className="mt-8 md:mt-10">
+              <h3 className="text-2xl md:text-3xl font-bold">{person.name}</h3>
+              <p className="text-white/70 font-medium mt-1">{person.role}</p>
+
+              {/* optional subtle divider for premium feel */}
+              <div className="mt-6 h-px w-24 bg-white/10" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default CeoVisionSection;
+}
