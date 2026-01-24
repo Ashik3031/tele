@@ -1,0 +1,66 @@
+
+{
+  "seo": {
+    "titleHighlight": "Best SEO Agency in UAE ",
+    "titleRest": "for Real Business Growth",
+    "description": "We don’t just improve rankings — we build SEO strategies that attract high-intent users, increase conversions, and turn search visibility into long-term revenue for UAE businesses.",
+    "whatsappText": "I want to know more about the SEO service",
+
+    "whatsappLabel": "Free Consultation",
+    "contactLabel": "Speak to Us",
+
+    "whatsappHref": "https://wa.me/971503535409?text=I%20want%20a%20free%20SEO%20audit",
+    "contactHref": "/contact"
+  },
+
+  "videography": {
+    "titleHighlight": "Video Production Company ",
+    "titleRest": "Dubai",
+    "description": "Looking for a trusted video production company in Dubai? We create cinematic brand films, product videos & corporate videos that drive growth.",
+    "whatsappText": "I want to know more about the videography service",
+
+    "whatsappLabel": " Get a Free Quote",
+    "contactLabel": "Free consultation",
+
+    "whatsappHref": "https://wa.me/971503535409?text=I%20want%20a%20videography%20quote",
+    "contactHref": "/contact"
+  },
+
+  "socialmedia": {
+    "titleHighlight": "Social Media Agency Dubai ",
+    "titleRest": "Make your |brand go viral| ! ",
+    "description": "A trusted social media agency in Dubai helping brands increase visibility, engagement, and conversions through strategic social media marketing.",
+    "whatsappText": "I want to know more about the social media service",
+
+    "whatsappLabel": "Talk to Our Experts",
+    "contactLabel": "Let’s Get Social",
+
+    "whatsappHref": "https://wa.me/971503535409?text=I%20want%20a%20social%20media%20strategy%20call",
+    "contactHref": "/contact"
+  },
+
+  "website": {
+    "titleHighlight": "Web Development Agency in ",
+    "titleRest": "Dubai",
+    "description": "We design and develop high-performance websites that don’t just look exceptional — they build trust, engage users, and convert visitors into long-term customers across Dubai and the UAE.",
+    "whatsappText": "I want to know more about the web development service",
+
+    "whatsappLabel": "Start a Project",
+    "contactLabel": "Free Consultation",
+
+    "whatsappHref": "https://wa.me/971503535409?text=I%20want%20a%20website%20development%20quote",
+    "contactHref": "/contact"
+  },
+  "performanceMarketing": {
+    "titleHighlight": "Performance Marketing Agency in ",
+    "titleRest": "Dubai",
+    "description": "We’re a performance marketing agency in Dubai focused on driving measurable growth, conversions, and ROI across digital channels.",
+    "whatsappText": "I want to know more about the web development service",
+
+    "whatsappLabel": "Book a Call",
+    "contactLabel": "Free Consultation",
+
+    "whatsappHref": "https://wa.me/971503535409?text=I%20want%20a%20website%20development%20quote",
+    "contactHref": "/contact"
+  }
+}

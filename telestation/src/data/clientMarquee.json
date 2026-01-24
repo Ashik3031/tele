@@ -1,0 +1,29 @@
+{
+  "website": {
+    "label": "Trusted by leading brands",
+    "items": [
+      { "name": "Amazon", "src": "/logos/1.png" },
+      { "name": "Dubai Mall", "src": "/logos/2.png" },
+      { "name": "Ferrari", "src": "/logos/3.png" },
+      { "name": "G42", "src": "/logos/4.png" },
+      { "name": "Rove Hotels", "src": "/logos/5.png" },
+      { "name": "Novo Nordisk", "src": "/logos/6.png" },
+      { "name": "CBRE", "src": "/logos/7.png" },
+      { "name": "Toshiba", "src": "/logos/12.png" },
+      { "name": "Barceló", "src": "/logos/13.png" }
+    ]
+  },
+  "socialMedia": {
+    "label": "Social media partners & campaigns",
+    "items": [
+      { "name": "Client 1", "src": "/logos/social1.png" },
+      { "name": "Client 2", "src": "/logos/social2.png" },
+      { "name": "Client 3", "src": "/logos/social3.png" },
+      { "name": "Client 4", "src": "/logos/social4.png" },
+      { "name": "Client 5", "src": "/logos/social5.png" },
+      { "name": "Client 6", "src": "/logos/social6.png" },
+      { "name": "Client 7", "src": "/logos/social7.png" },
+      { "name": "Client 8", "src": "/logos/social8.png" }
+    ]
+  }
+}

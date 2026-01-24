@@ -1,0 +1,11 @@
+{
+  "heading": "Benefits of Social Media Services",
+  "items": [
+    { "title": "Targeted Goals", "icon": "target" },
+    { "title": "Creative Content", "icon": "penTool" },
+    { "title": "Platform Management", "icon": "sliders" },
+    { "title": "Audience Engagement", "icon": "users" },
+    { "title": "Data Insights", "icon": "barChart" },
+    { "title": "Brand Visibility", "icon": "eye" }
+  ]
+}
