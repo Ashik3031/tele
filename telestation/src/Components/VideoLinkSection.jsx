@@ -1,43 +1,69 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Instagram, ExternalLink, X, Maximize2 } from 'lucide-react';
+import { getAllFeaturedReels } from '../services/reelAPI';
+
+const DEFAULT_REELS = [
+  {
+    id: 1,
+    reelUrl: "https://www.instagram.com/reel/DOqDVCTiaF7/",
+    embedUrl: "https://www.instagram.com/reel/DOqDVCTiaF7/embed/captioned",
+    title: "Dubai Marina Luxury Tour",
+    views: "125K",
+    username: "@wgg_realestate"
+  },
+  {
+    id: 2,
+    reelUrl: "https://www.instagram.com/reel/DLiJXW6yAdy/",
+    embedUrl: "https://www.instagram.com/reel/DLiJXW6yAdy/embed/captioned",
+    title: "Investment Tips 2025",
+    views: "89K",
+    username: "@wgg_realestate"
+  },
+  {
+    id: 3,
+    reelUrl: "https://www.instagram.com/reel/DHa40wvpZyz/",
+    embedUrl: "https://www.instagram.com/reel/DHa40wvpZyz/embed/captioned",
+    title: "Premium Properties",
+    views: "156K",
+    username: "@wgg_realestate"
+  },
+  {
+    id: 4,
+    reelUrl: "https://www.instagram.com/reel/DGGF845JoEK/",
+    embedUrl: "https://www.instagram.com/reel/DGGF845JoEK/embed/captioned",
+    title: "Market Insights",
+    views: "94K",
+    username: "@wgg_realestate"
+  }
+];
 
 export default function RealEstatePodcast() {
   const [selectedReel, setSelectedReel] = useState(null);
+  const [reels, setReels] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const reels = [
-    {
-      id: 1,
-      reelUrl: "https://www.instagram.com/reel/DOqDVCTiaF7/",
-      embedUrl: "https://www.instagram.com/reel/DOqDVCTiaF7/embed/captioned",
-      title: "Dubai Marina Luxury Tour",
-      views: "125K",
-      username: "@wgg_realestate"
-    },
-    {
-      id: 2,
-      reelUrl: "https://www.instagram.com/reel/DLiJXW6yAdy/",
-      embedUrl: "https://www.instagram.com/reel/DLiJXW6yAdy/embed/captioned",
-      title: "Investment Tips 2025",
-      views: "89K",
-      username: "@wgg_realestate"
-    },
-    {
-      id: 3,
-      reelUrl: "https://www.instagram.com/reel/DHa40wvpZyz/",
-      embedUrl: "https://www.instagram.com/reel/DHa40wvpZyz/embed/captioned",
-      title: "Premium Properties",
-      views: "156K",
-      username: "@wgg_realestate"
-    },
-    {
-      id: 4,
-      reelUrl: "https://www.instagram.com/reel/DGGF845JoEK/",
-      embedUrl: "https://www.instagram.com/reel/DGGF845JoEK/embed/captioned",
-      title: "Market Insights",
-      views: "94K",
-      username: "@wgg_realestate"
-    }
-  ];
+  useEffect(() => {
+    const fetchReels = async () => {
+      try {
+        setLoading(true);
+        const response = await getAllFeaturedReels();
+        if (response.success && response.data) {
+          setReels(response.data);
+        } else {
+          setReels(DEFAULT_REELS);
+        }
+      } catch (error) {
+        console.error('Failed to fetch reels:', error);
+        setReels(DEFAULT_REELS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReels();
+  }, []);
+
+  const displayReels = reels.length > 0 ? reels : DEFAULT_REELS;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
@@ -122,7 +148,7 @@ export default function RealEstatePodcast() {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {reels.map((reel) => (
+            {displayReels.map((reel) => (
               <div
                 key={reel.id}
                 className="relative group"

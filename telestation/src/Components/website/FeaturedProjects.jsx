@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
+import { getAllFeaturedProjects } from "../../services/projectAPI";
 
 /**
  * Website screenshot preview (image) — avoids iframe embedding issues.
@@ -7,7 +8,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 const getShot = (url) =>
   `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200`;
 
-const PROJECTS = [
+const DEFAULT_PROJECTS = [
   {
     title: "Pure Hygiene",
     href: "https://purehygiene.ae/",
@@ -90,11 +91,36 @@ function MobileMockup({ url, title }) {
 }
 
 export default function FeaturedProjects({
-  items = PROJECTS,
   title = "Featured Projects",
   moreWorkLabel = "More Work",
   moreWorkHref = "/work",
 }) {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await getAllFeaturedProjects();
+        if (response.success && response.data) {
+          setProjects(response.data);
+        } else {
+          setProjects(DEFAULT_PROJECTS);
+        }
+      } catch (error) {
+        console.error('Failed to fetch projects:', error);
+        setProjects(DEFAULT_PROJECTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  const displayProjects = projects.length > 0 ? projects : DEFAULT_PROJECTS;
+
   return (
     <section className="relative w-full overflow-hidden bg-black py-16">
       {/* Animated background elements */}
@@ -119,7 +145,7 @@ export default function FeaturedProjects({
 
         {/* Grid */}
         <div className="grid gap-6 sm:grid-cols-2">
-          {items.slice(0, 4).map((p, idx) => (
+          {displayProjects.slice(0, 4).map((p, idx) => (
             <div
               key={idx}
               className="group animate-fade-in-up overflow-hidden rounded-2xl bg-zinc-900/80 shadow-2xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[#D9F70D]/20"

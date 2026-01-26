@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Trash2, CheckCircle, Clock, XCircle, Eye, Briefcase, Award, Users, Zap } from 'lucide-react';
+import { Download, Trash2, CheckCircle, Clock, XCircle, Eye, Briefcase, Award, Users, Zap, Film } from 'lucide-react';
 import { jobApplicationAPI } from '../services/jobApplicationAPI';
 import JobPostingsManager from './JobPostingsManager';
 import AwardsManager from './AwardsManager';
 import TeamManager from './TeamManager';
 import CultureManager from './CultureManager';
+import ProjectManager from './ProjectManager';
+import ReelManager from './ReelManager';
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -12,7 +14,7 @@ const AdminDashboard = () => {
   const [selectedApp, setSelectedApp] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('applications'); // 'applications', 'postings', 'awards', 'team', 'culture'
+  const [activeTab, setActiveTab] = useState('applications'); // 'applications', 'postings', 'awards', 'team', 'culture', 'projects', 'reels'
 
   useEffect(() => {
     fetchApplications();
@@ -168,6 +170,28 @@ const AdminDashboard = () => {
           >
             <Zap className="inline-block w-4 h-4 mr-2" />
             Life at TSPL
+          </button>
+          <button
+            onClick={() => setActiveTab('projects')}
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
+              activeTab === 'projects'
+                ? 'border-b-2 border-cyan-400 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Briefcase className="inline-block w-4 h-4 mr-2" />
+            Featured Projects
+          </button>
+          <button
+            onClick={() => setActiveTab('reels')}
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
+              activeTab === 'reels'
+                ? 'border-b-2 border-cyan-400 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Film className="inline-block w-4 h-4 mr-2" />
+            Featured Reels
           </button>
         </div>
 
@@ -424,6 +448,16 @@ const AdminDashboard = () => {
         {/* Culture Tab */}
         {activeTab === 'culture' && (
           <CultureManager />
+        )}
+
+        {/* Projects Tab */}
+        {activeTab === 'projects' && (
+          <ProjectManager />
+        )}
+
+        {/* Reels Tab */}
+        {activeTab === 'reels' && (
+          <ReelManager />
         )}
       </div>
     </div>

@@ -8,6 +8,8 @@ const jobPostingRoutes = require('./routes/jobPostings');
 const awardRoutes = require('./routes/awards');
 const teamRoutes = require('./routes/team');
 const cultureRoutes = require('./routes/culture');
+const projectRoutes = require('./routes/projects');
+const reelRoutes = require('./routes/reels');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,6 +55,8 @@ mongoose
 app.use('/api/jobs', jobApplicationRoutes);
 app.use('/api/team', teamRoutes);
 app.use('/api/culture', cultureRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/reels', reelRoutes);
 app.use('/api/postings', jobPostingRoutes);
 app.use('/api/awards', awardRoutes);
 
