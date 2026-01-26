@@ -248,34 +248,34 @@ const LifeAtDigtelSection = () => {
             </motion.div>
 
             <div className="flex flex-col gap-4">
-              <ImageCard member={teamMembers[0]} index={0} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="280px" />
-              <ImageCard member={teamMembers[6]} index={6} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" />
+              {teamMembers[0] && <ImageCard member={teamMembers[0]} index={0} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="280px" />}
+              {teamMembers[6] && <ImageCard member={teamMembers[6]} index={6} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" />}
             </div>
           </div>
 
           {/* Column 2 */}
           <div className="flex-shrink-0 w-[200px]">
             <div className="flex flex-col gap-4">
-              <ImageCard member={teamMembers[1]} index={1} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="180px" delay={0.1} />
-              <ImageCard member={teamMembers[3]} index={3} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="280px" delay={0.15} />
-              <ImageCard member={teamMembers[7]} index={7} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.2} />
+              {teamMembers[1] && <ImageCard member={teamMembers[1]} index={1} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="180px" delay={0.1} />}
+              {teamMembers[3] && <ImageCard member={teamMembers[3]} index={3} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="280px" delay={0.15} />}
+              {teamMembers[7] && <ImageCard member={teamMembers[7]} index={7} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.2} />}
             </div>
           </div>
 
           {/* Column 3 */}
           <div className="flex-shrink-0 w-[220px]">
             <div className="flex flex-col gap-4">
-              <ImageCard member={teamMembers[2]} index={2} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="380px" delay={0.25} />
-              <ImageCard member={teamMembers[8]} index={8} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" delay={0.3} />
-              <ImageCard member={teamMembers[9]} index={9} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.35} />
+              {teamMembers[2] && <ImageCard member={teamMembers[2]} index={2} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="380px" delay={0.25} />}
+              {teamMembers[8] && <ImageCard member={teamMembers[8]} index={8} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" delay={0.3} />}
+              {teamMembers[9] && <ImageCard member={teamMembers[9]} index={9} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.35} />}
             </div>
           </div>
 
           {/* Column 4 */}
           <div className="flex-shrink-0 w-[200px]">
             <div className="flex flex-col gap-4 pt-32">
-              <ImageCard member={teamMembers[4]} index={4} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" delay={0.35} />
-              <ImageCard member={teamMembers[5]} index={5} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.4} />
+              {teamMembers[4] && <ImageCard member={teamMembers[4]} index={4} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="240px" delay={0.35} />}
+              {teamMembers[5] && <ImageCard member={teamMembers[5]} index={5} activeIndex={activeIndex} setActiveIndex={setActiveIndex} setSelected={setSelected} height="160px" delay={0.4} />}
             </div>
           </div>
         </div>
