@@ -2,8 +2,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, X, Loader } from "lucide-react";
 import CareersForm from "./CareerFrom";
+import { jobPostingAPI } from "../../services/jobPostingAPI";
 
 const COMPANY_LOCATION = "Calicut, Kerala";
 
@@ -12,27 +13,6 @@ const BRAND = {
   cyan: "#6EF1F7",
   blue: "#007399",
 };
-
-const JOBS = [
-  {
-    id: 1,
-    title: "Business Development Executive (B2B)",
-    type: "Onsite",
-    location: COMPANY_LOCATION,
-  },
-  {
-    id: 2,
-    title: "Business Development Executive (B2C)",
-    type: "Onsite",
-    location: COMPANY_LOCATION,
-  },
-  {
-    id: 3,
-    title: "Business Development Executive (B2C)",
-    type: "Onsite",
-    location: COMPANY_LOCATION,
-  },
-];
 
 function JobCard({ job, onApply }) {
   return (
@@ -207,6 +187,31 @@ function ModalShell({ open, onClose, title, children }) {
 export default function CareersOpenings() {
   const [open, setOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch job postings on mount
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await jobPostingAPI.getAllPostings();
+        if (response.success) {
+          setJobs(response.data);
+        } else {
+          setError('Failed to load job postings');
+        }
+      } catch (err) {
+        console.error('Error fetching jobs:', err);
+        setError('Error loading job postings');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const modalTitle = useMemo(() => {
     if (!selectedJob) return "Apply Now";
@@ -236,12 +241,38 @@ export default function CareersOpenings() {
           </p>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center py-20">
+            <div className="flex flex-col items-center gap-4">
+              <Loader className="w-8 h-8 text-cyan-400 animate-spin" />
+              <p className="text-white/60">Loading positions...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="flex justify-center py-20">
+            <p className="text-red-400">{error}</p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && jobs.length === 0 && (
+          <div className="flex justify-center py-20">
+            <p className="text-white/60">No open positions at the moment. Please check back soon!</p>
+          </div>
+        )}
+
         {/* ✅ grid stays responsive */}
-        <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {JOBS.map((job) => (
-            <JobCard key={job.id} job={job} onApply={() => handleApply(job)} />
-          ))}
-        </div>
+        {!loading && jobs.length > 0 && (
+          <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {jobs.map((job) => (
+              <JobCard key={job._id} job={job} onApply={() => handleApply(job)} />
+            ))}
+          </div>
+        )}
 
         <ModalShell open={open} onClose={close} title={modalTitle}>
           {selectedJob && (
@@ -258,13 +289,13 @@ export default function CareersOpenings() {
             </div>
           )}
 
-         <CareersForm
-  variant="modal"
-  jobTitle={selectedJob?.title}
-  jobType={selectedJob?.type}
-  jobLocation={selectedJob?.location}
-/>
-
+          <CareersForm
+            variant="modal"
+            jobTitle={selectedJob?.title}
+            jobType={selectedJob?.type}
+            jobLocation={selectedJob?.location}
+            jobId={selectedJob?._id}
+          />
         </ModalShell>
       </div>
     </section>

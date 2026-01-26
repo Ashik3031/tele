@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const jobApplicationRoutes = require('./routes/jobApplications');
+const jobPostingRoutes = require('./routes/jobPostings');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ mongoose
 
 // Routes
 app.use('/api/jobs', jobApplicationRoutes);
+app.use('/api/postings', jobPostingRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
