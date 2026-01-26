@@ -15,7 +15,7 @@ import Footer from "./Components/Footer.jsx";
 import ServicesPage from "./pages/Services.jsx";
 import CareerPage from "./pages/CareerPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
-import ProtectedAdminRoute from "./components/ProtectedAdminRoute.jsx";
+import ProtectedAdminRoute from "./Components/ProtectedAdminRoute.jsx";
 import DigitalMarketingPage from "./pages/DigitalMarketingPage.jsx";
 import VideographyPage from "./pages/VideographyPage.jsx";
 import SEOPage from "./pages/SEOPage.jsx";
