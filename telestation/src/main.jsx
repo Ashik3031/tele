@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './styles/select.css'
 import App from './App.jsx'
 // import "./styles/style.css";        // ← paste your big CSS into this file
 import "swiper/css";                // Swiper core styles

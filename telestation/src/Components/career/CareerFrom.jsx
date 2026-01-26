@@ -16,6 +16,8 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
   const [resume, setResume] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fileSizeError, setFileSizeError] = useState(null);
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
 
   const wrapperClass =
     variant === "modal"
@@ -33,12 +35,30 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
   const focusRing =
     "focus:border-transparent focus:ring-2 focus:ring-[rgba(110,241,247,0.45)]";
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        setFileSizeError(`File size is ${(file.size / (1024 * 1024)).toFixed(2)}MB. Maximum allowed is 10MB.`);
+        setResume(null);
+        e.target.value = '';
+      } else {
+        setFileSizeError(null);
+        setResume(file);
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
 
     const file = formRef.current?.resume?.files?.[0];
     if (!file) return alert("Please upload your resume!");
+    
+    if (file.size > MAX_FILE_SIZE) {
+      return alert(`File size is ${(file.size / (1024 * 1024)).toFixed(2)}MB. Maximum allowed is 10MB.`);
+    }
 
     try {
       setLoading(true);
@@ -210,8 +230,8 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
 
         {/* Resume upload (full width) */}
         <label
-          className={`md:col-span-2 block border border-dashed rounded-xl ${labelPad} text-center cursor-pointer text-white/70 hover:bg-white/5 transition`}
-          style={{ borderColor: `${BRAND.accent}55` }}
+          className={`md:col-span-2 block border border-dashed rounded-xl ${labelPad} text-center cursor-pointer text-white/70 hover:bg-white/5 transition ${fileSizeError ? 'border-red-500/50' : ''}`}
+          style={{ borderColor: fileSizeError ? '#ef44441a' : `${BRAND.accent}55` }}
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
             <span className="font-medium">
@@ -219,7 +239,7 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
             </span>
             {!resume && (
               <span className="text-xs text-white/45">
-                (PDF/DOC, max recommended 5MB)
+                (PDF/DOC, max 10MB)
               </span>
             )}
           </div>
@@ -229,11 +249,18 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
             name="resume"
             type="file"
             accept=".pdf,.doc,.docx"
-            onChange={(e) => setResume(e.target.files?.[0] || null)}
+            onChange={handleResumeChange}
             hidden
             required
           />
         </label>
+
+        {/* File size error message */}
+        {fileSizeError && (
+          <div className="md:col-span-2 bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-red-400 text-sm">
+            ⚠️ {fileSizeError}
+          </div>
+        )}
 
         {/* Cover letter (full width) */}
         <textarea
@@ -252,7 +279,7 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
         {/* ✅ Button should be type="submit" */}
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || fileSizeError !== null}
           className="
             md:col-span-2
             w-full py-3.5 sm:py-4

@@ -251,11 +251,18 @@ const JobPostingsManager = () => {
                     name="type"
                     value={formData.type}
                     onChange={handleInputChange}
-                    className="w-full bg-white/5 border border-white/10 rounded px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                    className="w-full bg-black border border-white/10 rounded px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 appearance-none cursor-pointer"
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236EF1F7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                      backgroundPosition: 'right 0.5rem center',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: '1.5em 1.5em',
+                      paddingRight: '2.5rem'
+                    }}
                   >
-                    <option value="Onsite">Onsite</option>
-                    <option value="Remote">Remote</option>
-                    <option value="Hybrid">Hybrid</option>
+                    <option value="Onsite" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Onsite</option>
+                    <option value="Remote" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Remote</option>
+                    <option value="Hybrid" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Hybrid</option>
                   </select>
                 </div>
 
@@ -303,11 +310,18 @@ const JobPostingsManager = () => {
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full bg-white/5 border border-white/10 rounded px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                  className="w-full bg-black border border-white/10 rounded px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500/50 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236EF1F7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                    backgroundPosition: 'right 0.5rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.5rem'
+                  }}
                 >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="closed">Closed</option>
+                  <option value="active" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Active</option>
+                  <option value="inactive" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Inactive</option>
+                  <option value="closed" style={{ backgroundColor: '#1a1a1a', color: 'white' }}>Closed</option>
                 </select>
               </div>
 

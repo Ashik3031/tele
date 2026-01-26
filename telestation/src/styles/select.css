@@ -1,0 +1,41 @@
+/* Global select styling fixes */
+
+/* Fix for all select elements */
+select {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.1);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236EF1F7' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+/* Fix option styling */
+select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 0.5rem;
+}
+
+/* Fix option hover/selected state */
+select option:checked {
+  background: linear-gradient(#1a1a1a, #1a1a1a);
+  color: #6EF1F7;
+}
+
+/* Firefox specific styling */
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #ffffff;
+}
+
+/* Safari specific fixes */
+@supports (-webkit-appearance: none) {
+  select {
+    -webkit-appearance: none;
+  }
+}
