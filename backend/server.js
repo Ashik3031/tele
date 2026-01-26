@@ -50,9 +50,9 @@ mongoose
   });
 
 // Routes
-app.use('/api/jobs', jobApplicationR
+app.use('/api/jobs', jobApplicationRoutes);
 app.use('/api/team', teamRoutes);
-app.use('/api/culture', cultureRoutes);outes);
+app.use('/api/culture', cultureRoutes);
 app.use('/api/postings', jobPostingRoutes);
 app.use('/api/awards', awardRoutes);
 
