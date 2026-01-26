@@ -1,14 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { getAllCultureItems } from "../../services/cultureAPI";
 
 const LifeAtDigtelSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [selected, setSelected] = useState(null);
   const BRAND = { accent: "#37C6D9" };
-const [imgAR, setImgAR] = useState(3 / 4); // default fallback
+  const [imgAR, setImgAR] = useState(3 / 4);
+  const [cultureItems, setCultureItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchCultureItems();
+  }, []);
 
-  const teamMembers = [
+  const fetchCultureItems = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllCultureItems();
+      if (response.success && response.data && response.data.all) {
+        setCultureItems(response.data.all);
+      }
+    } catch (error) {
+      console.error('Failed to fetch culture items:', error);
+      setCultureItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Use API data if available, otherwise fallback to static data
+  const defaultTeam = [
     {
       name: "NIHAL",
       role: "BDE",
@@ -89,15 +111,18 @@ const [imgAR, setImgAR] = useState(3 / 4); // default fallback
       quote: "The projects are challenging, but the environment is supportive. That balance is rare.",
       author: "Hari • Data Analyst",
     },
-    {
-      name: "SHAMNA",
-      role: "HR Manager",
-      image: "/image/program9.jpeg",
-      color: "bg-purple-600",
-      quote: "We build with taste and discipline. If you care about quality, you'll love TSPL.",
-      author: "Shamna • HR Manager",
-    },
   ];
+
+  const teamMembers = cultureItems.length > 0 
+    ? cultureItems.slice(0, 10).map((item, idx) => ({
+        name: item.title,
+        role: item.category,
+        image: item.imageUrl || '/image/placeholder.jpeg',
+        color: ['bg-red-600', 'bg-yellow-500', 'bg-blue-600', 'bg-lime-500', 'bg-purple-600'][idx % 5],
+        quote: item.description || 'No description',
+        author: `${item.title} • ${item.category}`,
+      }))
+    : defaultTeam;
 
   const closeModal = () => setSelected(null);
 
@@ -256,260 +281,173 @@ const [imgAR, setImgAR] = useState(3 / 4); // default fallback
         </div>
       </div>
 
-      
-     
-{/* Modal */}
-{/* Modal */}
-<AnimatePresence>
-  {selected && (
-    <motion.div
-      className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 md:p-8"
-      onClick={closeModal}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-    >
-      {/* -------------------------
-          ✅ MOBILE MODAL (keep yours)
-          ------------------------- */}
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ opacity: 0, y: 30, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 30, scale: 0.96 }}
-        transition={{ type: "spring", stiffness: 260, damping: 26 }}
-        className="
-          md:hidden
-          relative w-full
-          max-w-[92vw]
-          h-[90svh]
-          rounded-3xl bg-zinc-950 shadow-2xl overflow-hidden
-        "
-        style={{
-          border: `1px solid ${BRAND.accent}22`,
-          boxShadow: `0 30px 90px rgba(0,0,0,0.65)`,
-        }}
-      >
-        {/* glow */}
-        <div
-          className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full blur-3xl"
-          style={{
-            background: `radial-gradient(circle, ${BRAND.accent}40, transparent 65%)`,
-          }}
-        />
-        <div
-          className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full blur-3xl"
-          style={{
-            background: `radial-gradient(circle, ${BRAND.accent}2a, transparent 65%)`,
-          }}
-        />
-
-        {/* Close */}
-        <motion.button
-          onClick={closeModal}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.06, rotate: 90 }}
-          whileTap={{ scale: 0.94 }}
-          className="absolute right-3 top-3 z-20 rounded-xl px-3 py-2 text-white"
-          style={{
-            border: `1px solid ${BRAND.accent}33`,
-            background: `linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))`,
-          }}
-        >
-          ✕
-        </motion.button>
-
-        {/* ✅ No-scroll layout */}
-        <div className="h-full p-4 sm:p-6">
-          <div className="h-full grid gap-4">
-            {/* Image */}
-            <div
-              className="relative w-full overflow-hidden rounded-2xl bg-black"
-              style={{ border: `1px solid ${BRAND.accent}22` }}
-            >
-              <img
-                src={selected.image}
-                alt={selected.name}
-                draggable={false}
-                className="w-full h-full object-cover object-center"
-                style={{
-                  maxHeight: "clamp(240px, 48vh, 520px)",
-                }}
-              />
-            </div>
-
-            {/* Text */}
-            <div className="min-w-0 flex flex-col justify-center">
-              <p
-                className="text-xs font-medium"
-                style={{ color: `${BRAND.accent}cc` }}
-              >
-                Life at TSPL
-              </p>
-
-              <h3 className="mt-2 text-2xl font-extrabold text-white leading-tight">
-                {selected.name}
-              </h3>
-
-              <p className="mt-1 text-sm text-white/70">{selected.role}</p>
-
-              <div
-                className="mt-4 rounded-2xl p-4"
-                style={{
-                  border: `1px solid ${BRAND.accent}22`,
-                  background:
-                    "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
-                }}
-              >
-                <p className="text-white/90 leading-relaxed text-sm">
-                  “{selected.quote}”
-                </p>
-
-                <div className="mt-3 flex items-center gap-2">
-                  <span
-                    className="inline-block h-1.5 w-1.5 rounded-full"
-                    style={{ backgroundColor: BRAND.accent }}
-                  />
-                  <p className="text-sm text-white/55 font-medium">
-                    — {selected.author}
-                  </p>
-                </div>
-              </div>
-
-              <div
-                className="mt-4 h-px w-full"
-                style={{
-                  background: `linear-gradient(90deg, transparent, ${BRAND.accent}55, transparent)`,
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* -------------------------
-          ✅ DESKTOP MODAL (previous style)
-          ------------------------- */}
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        initial={{ opacity: 0, y: 30, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 30, scale: 0.96 }}
-        transition={{ type: "spring", stiffness: 260, damping: 26 }}
-        className="
-          hidden md:block
-          relative w-full max-w-5xl
-          rounded-3xl bg-zinc-950 shadow-2xl overflow-hidden
-        "
-        style={{
-          border: `1px solid ${BRAND.accent}22`,
-          boxShadow: `0 30px 90px rgba(0,0,0,0.65)`,
-        }}
-      >
-        {/* ✅ Brand glow */}
-        <div
-          className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full blur-3xl"
-          style={{
-            background: `radial-gradient(circle, ${BRAND.accent}40, transparent 65%)`,
-          }}
-        />
-        <div
-          className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full blur-3xl"
-          style={{
-            background: `radial-gradient(circle, ${BRAND.accent}2a, transparent 65%)`,
-          }}
-        />
-
-        {/* Close button */}
-        <motion.button
-          onClick={closeModal}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.06, rotate: 90 }}
-          whileTap={{ scale: 0.94 }}
-          className="absolute right-4 top-4 z-20 rounded-xl px-3 py-2 text-white"
-          style={{
-            border: `1px solid ${BRAND.accent}33`,
-            background: `linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))`,
-          }}
-        >
-          ✕
-        </motion.button>
-
-        {/* ✅ Desktop layout (previous) */}
-        <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-[520px_1fr]">
-          {/* Image (big + contained like your old modal) */}
-          <div
-            className="relative w-full overflow-hidden rounded-2xl bg-black"
-            style={{
-              border: `1px solid ${BRAND.accent}22`,
-              minHeight: "520px",
-            }}
+      {/* Modal */}
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 md:p-8"
+            onClick={closeModal}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
           >
-            <img
-              src={selected.image}
-              alt={selected.name}
-              className="absolute inset-0 w-full h-full object-contain object-center"
-              draggable={false}
-            />
-          </div>
-
-          {/* Right side text */}
-          <div className="min-w-0 flex flex-col justify-center">
-            <p className="text-sm font-medium" style={{ color: `${BRAND.accent}cc` }}>
-              Life at TSPL
-            </p>
-
-            <h3 className="mt-2 text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-              {selected.name}
-            </h3>
-
-            <p className="mt-2 text-base sm:text-lg text-white/70">{selected.role}</p>
-
-            <div
-              className="mt-6 rounded-2xl p-5 sm:p-6"
+            {/* Mobile Modal */}
+            <motion.div
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 30, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 260, damping: 26 }}
+              className="md:hidden relative w-full max-w-[92vw] h-[90svh] rounded-3xl bg-zinc-950 shadow-2xl overflow-hidden"
               style={{
                 border: `1px solid ${BRAND.accent}22`,
-                background:
-                  "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+                boxShadow: `0 30px 90px rgba(0,0,0,0.65)`,
               }}
             >
-              <p className="text-white/90 leading-relaxed text-sm sm:text-base">
-                “{selected.quote}”
-              </p>
+              <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full blur-3xl"
+                style={{ background: `radial-gradient(circle, ${BRAND.accent}40, transparent 65%)` }}
+              />
+              <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full blur-3xl"
+                style={{ background: `radial-gradient(circle, ${BRAND.accent}2a, transparent 65%)` }}
+              />
 
-              <div className="mt-4 flex items-center gap-2">
-                <span
-                  className="inline-block h-1.5 w-1.5 rounded-full"
-                  style={{ backgroundColor: BRAND.accent }}
-                />
-                <p className="text-sm text-white/55 font-medium">— {selected.author}</p>
+              <motion.button
+                onClick={closeModal}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.06, rotate: 90 }}
+                whileTap={{ scale: 0.94 }}
+                className="absolute right-3 top-3 z-20 rounded-xl px-3 py-2 text-white"
+                style={{
+                  border: `1px solid ${BRAND.accent}33`,
+                  background: `linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))`,
+                }}
+              >
+                ✕
+              </motion.button>
+
+              <div className="h-full p-4 sm:p-6">
+                <div className="h-full grid gap-4">
+                  <div className="relative w-full overflow-hidden rounded-2xl bg-black" style={{ border: `1px solid ${BRAND.accent}22` }}>
+                    <img src={selected.image} alt={selected.name} draggable={false} className="w-full h-full object-cover object-center" style={{ maxHeight: "clamp(240px, 48vh, 520px)" }} />
+                  </div>
+
+                  <div className="min-w-0 flex flex-col justify-center">
+                    <p className="text-xs font-medium" style={{ color: `${BRAND.accent}cc` }}>
+                      Life at TSPL
+                    </p>
+
+                    <h3 className="mt-2 text-2xl font-extrabold text-white leading-tight">
+                      {selected.name}
+                    </h3>
+
+                    <p className="mt-1 text-sm text-white/70">{selected.role}</p>
+
+                    <div className="mt-4 rounded-2xl p-4" style={{
+                      border: `1px solid ${BRAND.accent}22`,
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+                    }}>
+                      <p className="text-white/90 leading-relaxed text-sm">
+                        "{selected.quote}"
+                      </p>
+
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: BRAND.accent }} />
+                        <p className="text-sm text-white/55 font-medium">— {selected.author}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 h-px w-full" style={{
+                      background: `linear-gradient(90deg, transparent, ${BRAND.accent}55, transparent)`,
+                    }} />
+                  </div>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div
-              className="mt-6 h-px w-full"
+            {/* Desktop Modal */}
+            <motion.div
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 30, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 260, damping: 26 }}
+              className="hidden md:block relative w-full max-w-5xl rounded-3xl bg-zinc-950 shadow-2xl overflow-hidden"
               style={{
-                background: `linear-gradient(90deg, transparent, ${BRAND.accent}55, transparent)`,
+                border: `1px solid ${BRAND.accent}22`,
+                boxShadow: `0 30px 90px rgba(0,0,0,0.65)`,
               }}
-            />
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+            >
+              <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full blur-3xl"
+                style={{ background: `radial-gradient(circle, ${BRAND.accent}40, transparent 65%)` }}
+              />
+              <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full blur-3xl"
+                style={{ background: `radial-gradient(circle, ${BRAND.accent}2a, transparent 65%)` }}
+              />
 
+              <motion.button
+                onClick={closeModal}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.06, rotate: 90 }}
+                whileTap={{ scale: 0.94 }}
+                className="absolute right-4 top-4 z-20 rounded-xl px-3 py-2 text-white"
+                style={{
+                  border: `1px solid ${BRAND.accent}33`,
+                  background: `linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))`,
+                }}
+              >
+                ✕
+              </motion.button>
 
+              <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-[520px_1fr]">
+                <div className="relative w-full overflow-hidden rounded-2xl bg-black" style={{
+                  border: `1px solid ${BRAND.accent}22`,
+                  minHeight: "520px",
+                }}>
+                  <img src={selected.image} alt={selected.name} className="absolute inset-0 w-full h-full object-contain object-center" draggable={false} />
+                </div>
 
+                <div className="min-w-0 flex flex-col justify-center">
+                  <p className="text-sm font-medium" style={{ color: `${BRAND.accent}cc` }}>
+                    Life at TSPL
+                  </p>
 
+                  <h3 className="mt-2 text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                    {selected.name}
+                  </h3>
+
+                  <p className="mt-2 text-base sm:text-lg text-white/70">{selected.role}</p>
+
+                  <div className="mt-6 rounded-2xl p-5 sm:p-6" style={{
+                    border: `1px solid ${BRAND.accent}22`,
+                    background: "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+                  }}>
+                    <p className="text-white/90 leading-relaxed text-sm sm:text-base">
+                      "{selected.quote}"
+                    </p>
+
+                    <div className="mt-4 flex items-center gap-2">
+                      <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: BRAND.accent }} />
+                      <p className="text-sm text-white/55 font-medium">— {selected.author}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 h-px w-full" style={{
+                    background: `linear-gradient(90deg, transparent, ${BRAND.accent}55, transparent)`,
+                  }} />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
-// Reusable Image Card Component
+// Image Card Component
 function ImageCard({ member, index, activeIndex, setActiveIndex, setSelected, height, delay = 0 }) {
   return (
     <motion.button
@@ -532,46 +470,15 @@ function ImageCard({ member, index, activeIndex, setActiveIndex, setSelected, he
         alt={member.name}
         className="w-full h-full object-cover"
         whileHover={{ scale: 1.15 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.7 }}
       />
-      
-      {/* Dark gradient overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" /> */}
-      
-      {/* Scanline effect */}
-      {/* <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px)'
-        }}
-      /> */}
 
-      {/* Name and role overlay */}
-      {/* <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        whileHover={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent"
-      >
-        <p className="text-white font-bold text-base drop-shadow-lg">{member.name}</p>
-        <p className="text-white/80 text-sm drop-shadow-lg">{member.role}</p>
-      </motion.div> */}
-
-      {/* Light sweep effect */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
         initial={{ x: "-100%" }}
         whileHover={{ x: "100%" }}
-        transition={{ duration: 1, ease: "easeInOut" }}
+        transition={{ duration: 1 }}
       />
-
-      {/* Corner accent */}
-      {/* <motion.div
-        initial={{ scale: 0, opacity: 0 }}
-        whileHover={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-white/60"
-      /> */}
     </motion.button>
   );
 }

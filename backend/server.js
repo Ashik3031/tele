@@ -5,6 +5,9 @@ require('dotenv').config();
 
 const jobApplicationRoutes = require('./routes/jobApplications');
 const jobPostingRoutes = require('./routes/jobPostings');
+const awardRoutes = require('./routes/awards');
+const teamRoutes = require('./routes/team');
+const cultureRoutes = require('./routes/culture');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,6 +34,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use('/api/awards/image', express.static('uploads/awards'));
+app.use('/api/team/image', express.static('uploads/team'));
+app.use('/api/culture/image', express.static('uploads/culture'));
 
 // MongoDB Connection
 mongoose
@@ -44,8 +50,11 @@ mongoose
   });
 
 // Routes
-app.use('/api/jobs', jobApplicationRoutes);
+app.use('/api/jobs', jobApplicationR
+app.use('/api/team', teamRoutes);
+app.use('/api/culture', cultureRoutes);outes);
 app.use('/api/postings', jobPostingRoutes);
+app.use('/api/awards', awardRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

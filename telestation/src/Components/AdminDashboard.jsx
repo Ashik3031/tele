@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Trash2, CheckCircle, Clock, XCircle, Eye, Briefcase } from 'lucide-react';
+import { Download, Trash2, CheckCircle, Clock, XCircle, Eye, Briefcase, Award, Users, Zap } from 'lucide-react';
 import { jobApplicationAPI } from '../services/jobApplicationAPI';
 import JobPostingsManager from './JobPostingsManager';
+import AwardsManager from './AwardsManager';
+import TeamManager from './TeamManager';
+import CultureManager from './CultureManager';
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -9,7 +12,7 @@ const AdminDashboard = () => {
   const [selectedApp, setSelectedApp] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('applications'); // 'applications' or 'postings'
+  const [activeTab, setActiveTab] = useState('applications'); // 'applications', 'postings', 'awards', 'team', 'culture'
 
   useEffect(() => {
     fetchApplications();
@@ -110,10 +113,10 @@ const AdminDashboard = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-4 mb-8 border-b border-white/10">
+        <div className="flex gap-4 mb-8 border-b border-white/10 overflow-x-auto">
           <button
             onClick={() => setActiveTab('applications')}
-            className={`pb-3 px-4 font-medium transition ${
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
               activeTab === 'applications'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
@@ -124,7 +127,7 @@ const AdminDashboard = () => {
           </button>
           <button
             onClick={() => setActiveTab('postings')}
-            className={`pb-3 px-4 font-medium transition ${
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
               activeTab === 'postings'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
@@ -132,6 +135,39 @@ const AdminDashboard = () => {
           >
             <Briefcase className="inline-block w-4 h-4 mr-2" />
             Job Postings
+          </button>
+          <button
+            onClick={() => setActiveTab('awards')}
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
+              activeTab === 'awards'
+                ? 'border-b-2 border-cyan-400 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Award className="inline-block w-4 h-4 mr-2" />
+            Awards
+          </button>
+          <button
+            onClick={() => setActiveTab('team')}
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
+              activeTab === 'team'
+                ? 'border-b-2 border-cyan-400 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Users className="inline-block w-4 h-4 mr-2" />
+            Team
+          </button>
+          <button
+            onClick={() => setActiveTab('culture')}
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
+              activeTab === 'culture'
+                ? 'border-b-2 border-cyan-400 text-cyan-400'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            <Zap className="inline-block w-4 h-4 mr-2" />
+            Life at TSPL
           </button>
         </div>
 
@@ -373,6 +409,21 @@ const AdminDashboard = () => {
         {/* Job Postings Tab */}
         {activeTab === 'postings' && (
           <JobPostingsManager />
+        )}
+
+        {/* Awards Tab */}
+        {activeTab === 'awards' && (
+          <AwardsManager />
+        )}
+
+        {/* Team Tab */}
+        {activeTab === 'team' && (
+          <TeamManager />
+        )}
+
+        {/* Culture Tab */}
+        {activeTab === 'culture' && (
+          <CultureManager />
         )}
       </div>
     </div>

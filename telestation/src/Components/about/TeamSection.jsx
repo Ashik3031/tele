@@ -1,55 +1,51 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { getAllTeamMembers } from "../../services/teamAPI";
 
 const BRAND = {
-  accent: "#37C6D9", // ✅ change this to your brand color
+  accent: "#37C6D9",
 };
 
-const team = [
-   { name: "ANITA", role: "Team Lead", image: "/image/tl4.jpeg" },
-    { name: "FAJINA", role: "Process Head", image: "/image/process-head.jpeg" },
-    { name: "SHAMNA", role: "HR Manager", image: "/image/hr.jpeg" },
-    { name: "AISHWAR", role: "Creative Lead", image: "/image/creative-lead.JPG" },
-    { name: "HARI", role: "Senior Data Analyst", image: "/image/data-analyst.JPG" },
-{ name: "KAVYA", role: "Quality Assistant", image: "/image/quality1.jpeg" },
-
-
-{ name: "ADHIL", role: "Senior Accountant", image: "/image/accountant.JPG" },
- { name: "AKSHAY", role: "Unit Lead", image: "/image/unit-lead.jpeg" },
-  { name: "ASLAH", role: "Admin", image: "/image/asla.webp" },
-  { name: "FUHAD ZENIN", role: "Team Lead", image: "/image/tl1.jpg" },
-
-
-
-
-  { name: "ANANDHAN", role: "Team Lead", image: "/image/tl2.png" },
-  
-  { name: "VIMAL", role: "Team Lead", image: "/image/tl3.png" },
- 
-  { name: "ZAINAB", role: "Team Lead", image: "/image/tl5.jpeg" },
-  
-  
-  
-  
- 
- 
-   { name: "LUFNA NASRIN T", role: "Senior Developer", image: "/image/developer1.jpeg" },
-  { name: "ASHIK", role: "Developer", image: "/image/developer2.jpeg" },
-  { name: "ARCHANA C", role: "Developer", image: "/image/developer3.jpeg" },
-
-  // ✅ Add more members here...
-  // { name: "NEW PERSON", role: "Designer", image: "/image/new.jpg" },
-];
-
 const TeamSection = () => {
-  const initialCount = 4; // ✅ how many cards to show first
+  const initialCount = 4;
   const [showAll, setShowAll] = useState(false);
+  const [team, setTeam] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTeamMembers();
+  }, []);
+
+  const fetchTeamMembers = async () => {
+    try {
+      setLoading(true);
+      const response = await getAllTeamMembers();
+      if (response.success && Array.isArray(response.data)) {
+        setTeam(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch team members:', error);
+      setTeam([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const visibleTeam = useMemo(() => {
     if (showAll) return team;
     return team.slice(0, initialCount);
-  }, [showAll]);
+  }, [showAll, team]);
 
   const hasMore = team.length > initialCount;
+
+  if (loading) {
+    return (
+      <section className="w-full bg-black py-20 px-4">
+        <div className="max-w-7xl mx-auto flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full bg-black py-20 px-4">
