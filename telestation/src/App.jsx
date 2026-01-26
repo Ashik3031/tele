@@ -19,7 +19,7 @@ import ProtectedAdminRoute from "./Components/ProtectedAdminRoute.jsx";
 import DigitalMarketingPage from "./pages/DigitalMarketingPage.jsx";
 import VideographyPage from "./pages/VideographyPage.jsx";
 import SEOPage from "./pages/SEOPage.jsx";
-import SocialMediaPage from "./pages/SocialMediaPage.jsx";
+import SocialMediaPage from "./pages/SocialmediaPage.jsx";
 import WebsitePage from "./pages/WebsitePage.jsx";
 import PerformanceMarketingPage from "./pages/PerformanceMarketingPage.jsx";
 import AwardsPage from "./pages/AwardPage";
@@ -61,7 +61,7 @@ function App() {
       <Route path="/video-graphy" element={<VideographyPage />} />
        <Route path="/seo" element={<SEOPage />} />
        <Route path="/social-media" element={<SocialMediaPage />} />
-    n <Route path="/performance-marketing" element={<PerformanceMarketingPage />} />
+       <Route path="/performance-marketing" element={<PerformanceMarketingPage />} />
        <Route path="/website" element={<WebsitePage />} />
       <Route path='/services/ai-development' element={<AIServicePage />} />
       <Route path='/services/blockchain-solutions' element= {<BlockchainSolutionsPage/>} />
