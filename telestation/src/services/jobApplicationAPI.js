@@ -1,4 +1,25 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Determine API URL based on environment
+let API_URL = 'http://localhost:5000/api'; // Default for local development
+
+if (import.meta.env.VITE_API_URL) {
+  API_URL = import.meta.env.VITE_API_URL;
+} else if (typeof window !== 'undefined') {
+  const hostname = window.location.hostname;
+  const protocol = window.location.protocol;
+  
+  // Production with domain
+  if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com') {
+    API_URL = `${protocol}//api.tspl-corp.com/api`;
+  }
+  // Production with server IP
+  else if (hostname === '72.61.238.90' || hostname.includes('72.61.238.90')) {
+    API_URL = 'http://72.61.238.90:5000/api';
+  }
+  // Local development
+  else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    API_URL = 'http://localhost:5000/api';
+  }
+}
 
 export const jobApplicationAPI = {
   // Submit job application with resume
@@ -6,6 +27,7 @@ export const jobApplicationAPI = {
     try {
       const response = await fetch(`${API_URL}/jobs/apply`, {
         method: 'POST',
+        credentials: 'include',
         body: formData, // FormData handles multipart/form-data automatically
       });
 
@@ -24,7 +46,13 @@ export const jobApplicationAPI = {
   // Get all applications (Admin)
   getAllApplications: async () => {
     try {
-      const response = await fetch(`${API_URL}/jobs/all`);
+      const response = await fetch(`${API_URL}/jobs/all`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -38,7 +66,13 @@ export const jobApplicationAPI = {
   // Get single application by ID
   getApplication: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/jobs/${id}`);
+      const response = await fetch(`${API_URL}/jobs/${id}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -54,6 +88,7 @@ export const jobApplicationAPI = {
     try {
       const response = await fetch(`${API_URL}/jobs/${id}/status`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -76,6 +111,10 @@ export const jobApplicationAPI = {
     try {
       const response = await fetch(`${API_URL}/jobs/${id}`, {
         method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
 
       if (!response.ok) {
