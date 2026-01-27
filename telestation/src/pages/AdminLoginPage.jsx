@@ -91,16 +91,6 @@ const AdminLoginPage = ({ onLogin }) => {
           </button>
         </form>
 
-        {/* Demo Credentials Info */}
-        <div className="mt-8 bg-white/5 border border-white/10 rounded-lg p-4">
-          <p className="text-xs text-gray-400 mb-2 font-semibold">Demo Credentials:</p>
-          <p className="text-xs text-gray-500">
-            <span className="text-gray-300">Username:</span> admin
-          </p>
-          <p className="text-xs text-gray-500">
-            <span className="text-gray-300">Password:</span> admin123
-          </p>
-        </div>
       </div>
     </div>
   );

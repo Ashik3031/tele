@@ -2,45 +2,32 @@ import { useEffect, useState } from "react";
 import { ExternalLink, X } from "lucide-react";
 import LazyIframe from "./LazyIframe";
 import ReelCardLoader from "./ReelCardLoader";
-
-const reels = [
-  {
-    id: 1,
-    reelUrl: "https://www.instagram.com/reel/DTQHm_YDChX/",
-    embedUrl: "https://www.instagram.com/reel/DTQHm_YDChX/embed",
-   
-  
-    username: "@wgg_realestate",
-  },
-  {
-    id: 2,
-    reelUrl: "https://www.instagram.com/reel/DR7o3pQkgvO/",
-    embedUrl: "https://www.instagram.com/reel/DR7o3pQkgvO/embed",
-   
-    
-    username: "@wgg_realestate",
-  },
-  {
-    id: 3,
-    reelUrl: "https://www.instagram.com/reel/DNYWkhzyKzA/",
-    embedUrl: "https://www.instagram.com/reel/DNYWkhzyKzA/embed",
-    
-   
-    username: "@wgg_realestate",
-  },
-  {
-    id: 4,
-    reelUrl: "https://www.instagram.com/reel/DS7xjLTknaE/",
-    embedUrl: "https://www.instagram.com/reel/DS7xjLTknaE/embed",
-    username: "@wgg_realestate",
-  },
-];
-
+import { getAllFeaturedReels } from "../services/reelAPI";
 
 export default function VideoTestimonials() {
+  const [reels, setReels] = useState([]);
   const [activeReel, setActiveReel] = useState(null);
   const [loadedMap, setLoadedMap] = useState({});
-const markLoaded = (id) => setLoadedMap((p) => ({ ...p, [id]: true }));
+  const [loading, setLoading] = useState(true);
+
+  const markLoaded = (id) => setLoadedMap((p) => ({ ...p, [id]: true }));
+
+  useEffect(() => {
+    const fetchReels = async () => {
+      try {
+        setLoading(true);
+        const response = await getAllFeaturedReels();
+        if (response.success) {
+          setReels(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching reels:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReels();
+  }, []);
 
 
   // Lock scroll when modal open
@@ -65,68 +52,74 @@ const markLoaded = (id) => setLoadedMap((p) => ({ ...p, [id]: true }));
         </h2>
 
         {/* GRID (same layout, just a bit tighter on mobile) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {reels.map((reel) => (
-            <button
-              key={reel.id}
-              type="button"
-              onClick={() => setActiveReel(reel)}
-              className="
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="w-10 h-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {reels.map((reel) => (
+              <button
+                key={reel._id}
+                type="button"
+                onClick={() => setActiveReel(reel)}
+                className="
                 relative rounded-2xl overflow-hidden shadow-xl group text-left
                 focus:outline-none focus:ring-2 focus:ring-rose-100
 
                 w-full max-w-[240px] mx-auto
                 sm:max-w-none sm:mx-0
               "
-            >
-              {/* SAME CARD DESIGN */}
- <div className="relative aspect-[3/4] w-full overflow-hidden border border-[#6EF1F7] bg-zinc-900">
-  {!loadedMap[reel.id] && <ReelCardLoader logoSrc="/logo1.png" />}
+              >
+                {/* SAME CARD DESIGN */}
+                <div className="relative aspect-[3/4.5] w-full overflow-hidden border border-[#6EF1F7] bg-zinc-900">
+                  {!loadedMap[reel._id] && <ReelCardLoader logoSrc="/logo1.png" />}
 
-  {/* Mobile */}
-  <div className="block sm:hidden relative w-full h-full">
-    <LazyIframe
-      src={reel.embedUrl}
-      className="relative w-full h-full"
-      style={{
-        border: "none",
-        transform: "scale(1.3) translateY(-12%)",
-        transformOrigin: "center",
-      }}
-      onLoad={() => markLoaded(reel.id)}
-    />
-  </div>
+                  {/* Mobile */}
+                  <div className="block sm:hidden relative w-full h-full">
+                    <LazyIframe
+                      src={reel.embedUrl}
+                      className="relative w-full h-full"
+                      style={{
+                        border: "none",
+                        transform: "scale(1.3) translateY(-12%)",
+                        transformOrigin: "center",
+                      }}
+                      onLoad={() => markLoaded(reel._id)}
+                    />
+                  </div>
 
-  {/* Desktop */}
-  <div className="hidden sm:block relative w-full h-full">
-    <LazyIframe
-      src={reel.embedUrl}
-      className="relative w-full h-full"
-      style={{
-        border: "none",
-        transform: "scale(1.25) translateY(-8%)",
-        transformOrigin: "center",
-      }}
-      onLoad={() => markLoaded(reel.id)}
-    />
-  </div>
-</div>
-
-
+                  {/* Desktop */}
+                  <div className="hidden sm:block relative w-full h-full">
+                    <LazyIframe
+                      src={reel.embedUrl}
+                      className="relative w-full h-full"
+                      style={{
+                        border: "none",
+                        transform: "scale(1.25) translateY(-8%)",
+                        transformOrigin: "center",
+                      }}
+                      onLoad={() => markLoaded(reel._id)}
+                    />
+                  </div>
+                </div>
 
 
-              {/* SAME INFO OVERLAY */}
-              <div className="absolute inset-x-0 bottom-0 p-6 pointer-events-none">
-                {/* <h3 className="text-sm md:text-base font-semibold line-clamp-1">
+
+
+                {/* SAME INFO OVERLAY */}
+                <div className="absolute inset-x-0 bottom-0 p-6 pointer-events-none">
+                  {/* <h3 className="text-sm md:text-base font-semibold line-clamp-1">
                   {reel.title}
                 </h3> */}
-                {/* <p className="text-xs text-gray-300 mt-1">
+                  {/* <p className="text-xs text-gray-300 mt-1">
                   {reel.views} views
                 </p> */}
-              </div>
-            </button>
-          ))}
-        </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* MODAL (unchanged) */}
@@ -150,7 +143,7 @@ const markLoaded = (id) => setLoadedMap((p) => ({ ...p, [id]: true }));
 
               <div className="absolute inset-0 overflow-hidden">
                 <iframe
-                  key={activeReel.id}
+                  key={activeReel._id}
                   src={`${activeReel.embedUrl}?autoplay=1&muted=0`}
                   className="absolute inset-0 w-full h-full"
                   style={{

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Instagram, ExternalLink, X, Maximize2 } from 'lucide-react';
 import { getAllFeaturedReels } from '../services/reelAPI';
+import LazyIframe from './LazyIframe';
 
 const DEFAULT_REELS = [
   {
@@ -36,6 +37,24 @@ const DEFAULT_REELS = [
     username: "@wgg_realestate"
   }
 ];
+
+const getThumbnailUrl = (reel) => {
+  if (reel.thumbnailUrl) return reel.thumbnailUrl;
+  const url = reel.reelUrl || reel.embedUrl || "";
+  const match = url.match(/\/(?:reel|p|tv|reels)\/([^\/?#&]+)/);
+  if (match && match[1]) {
+    return `https://www.instagram.com/reel/${match[1]}/media/?size=l`;
+  }
+  return null;
+};
+
+const getEmbedUrl = (reel) => {
+  const url = reel?.embedUrl || reel?.reelUrl || "";
+  const match = url.match(/\/(?:reel|p|tv|reels)\/([^\/?#&]+)/i);
+  if (!match) return url;
+  const type = match[1].toLowerCase() === "reels" ? "reel" : match[1].toLowerCase();
+  return `https://www.instagram.com/${type}/${match[2]}/embed/?hidecaption=1`;
+};
 
 export default function RealEstatePodcast() {
   const [selectedReel, setSelectedReel] = useState(null);
@@ -77,7 +96,7 @@ export default function RealEstatePodcast() {
                 [Podcast]
               </span>
             </div>
-            
+
             <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
               Markting podcast about{' '}
               <span className="text-emerald-400">real estate business</span>{' '}
@@ -93,11 +112,11 @@ export default function RealEstatePodcast() {
                 same story — luxury, lifestyle, premium? And how can a brand actually
                 stand out?
               </p>
-              
+
               <p>
                 Watch the video, to learn{' '}
                 <span className="text-emerald-400">practical insights on the real challenges of real
-                estate marketing in the UAE</span> — and what truly works in today's
+                  estate marketing in the UAE</span> — and what truly works in today's
                 competitive landscape.
               </p>
             </div>
@@ -111,7 +130,7 @@ export default function RealEstatePodcast() {
           {/* Right Content - Video */}
           <div className="relative group cursor-pointer">
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl z-10 pointer-events-none"></div>
-            
+
             {/* YouTube Embed */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video">
               <iframe
@@ -144,7 +163,7 @@ export default function RealEstatePodcast() {
               {/* <Instagram className="w-8 h-8 text-pink-500" /> */}
               <h2 className="text-3xl font-bold">Featured Videos</h2>
             </div>
-           
+
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -155,18 +174,23 @@ export default function RealEstatePodcast() {
               >
                 {/* Reel Container - Full Screen Video */}
                 <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-black shadow-xl border-2 border-gray-800 hover:border-emerald-400 transition-all duration-300">
-                  <iframe
-                    src={reel.embedUrl}
-                    className="w-full h-full scale-[1.8] origin-center"
-                    style={{
-                      border: 'none',
-                      overflow: 'hidden',
-                    }}
-                    frameBorder="0"
-                    scrolling="no"
-                    allowTransparency="true"
-                    allow="encrypted-media; autoplay; clipboard-write"
-                  ></iframe>
+                  {getThumbnailUrl(reel) ? (
+                    <img
+                      src={getThumbnailUrl(reel)}
+                      alt={reel.title || "Reel"}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-zinc-900" />
+                  )}
+
+                  {/* Play Indicator overlay */}
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-12 h-12 rounded-full bg-emerald-400/80 flex items-center justify-center">
+                      <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[12px] border-l-black border-b-[8px] border-b-transparent ml-1"></div>
+                    </div>
+                  </div>
 
                   {/* Expand Button Overlay */}
                   <div className="absolute top-3 right-3 z-30">
@@ -200,7 +224,7 @@ export default function RealEstatePodcast() {
 
       {/* Full Screen Modal */}
       {selectedReel && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/98 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedReel(null)}
         >
@@ -210,25 +234,25 @@ export default function RealEstatePodcast() {
           >
             <X className="w-7 h-7" />
           </button>
-          
-          <div 
+
+          <div
             className="relative w-full max-w-lg h-[85vh] rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src={selectedReel.embedUrl}
-              className="w-full h-full scale-[1.8] origin-center"
+              src={getEmbedUrl(selectedReel)}
+              className="absolute inset-0 w-full h-full"
               style={{
                 border: 'none',
-                overflow: 'hidden',
+                transform: "scale(1.12)",
+                transformOrigin: "center top",
               }}
-              frameBorder="0"
-              scrolling="no"
-              allowTransparency="true"
-              allow="encrypted-media; autoplay; clipboard-write"
-            ></iframe>
+              allow="autoplay; encrypted-media; clipboard-write; picture-in-picture; web-share"
+              allowFullScreen
+              title={selectedReel.title || "Instagram embed"}
+            />
           </div>
-          
+
           {/* <div className="absolute bottom-8 left-0 right-0 text-center space-y-2">
             <a
               href={selectedReel.reelUrl}

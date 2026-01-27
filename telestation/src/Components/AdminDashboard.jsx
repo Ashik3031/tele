@@ -39,7 +39,7 @@ const AdminDashboard = () => {
     try {
       const response = await jobApplicationAPI.updateApplicationStatus(id, newStatus);
       if (response.success) {
-        setApplications(applications.map(app => 
+        setApplications(applications.map(app =>
           app._id === id ? { ...app, applicationStatus: newStatus } : app
         ));
         alert('Application status updated');
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
 
   const filteredApplications = applications.filter(app => {
     const statusMatch = filterStatus === 'all' || app.applicationStatus === filterStatus;
-    const searchMatch = 
+    const searchMatch =
       app.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.position.toLowerCase().includes(searchTerm.toLowerCase());
@@ -118,77 +118,61 @@ const AdminDashboard = () => {
         <div className="flex gap-4 mb-8 border-b border-white/10 overflow-x-auto">
           <button
             onClick={() => setActiveTab('applications')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'applications'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'applications'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Eye className="inline-block w-4 h-4 mr-2" />
             Applications
           </button>
           <button
             onClick={() => setActiveTab('postings')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'postings'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'postings'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Briefcase className="inline-block w-4 h-4 mr-2" />
             Job Postings
           </button>
           <button
             onClick={() => setActiveTab('awards')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'awards'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'awards'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Award className="inline-block w-4 h-4 mr-2" />
             Awards
           </button>
           <button
             onClick={() => setActiveTab('team')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'team'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'team'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Users className="inline-block w-4 h-4 mr-2" />
             Team
           </button>
           <button
             onClick={() => setActiveTab('culture')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'culture'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'culture'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Zap className="inline-block w-4 h-4 mr-2" />
             Life at TSPL
           </button>
-          <button
-            onClick={() => setActiveTab('projects')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'projects'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            <Briefcase className="inline-block w-4 h-4 mr-2" />
-            Featured Projects
-          </button>
+
           <button
             onClick={() => setActiveTab('reels')}
-            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${
-              activeTab === 'reels'
+            className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'reels'
                 ? 'border-b-2 border-cyan-400 text-cyan-400'
                 : 'text-gray-400 hover:text-white'
-            }`}
+              }`}
           >
             <Film className="inline-block w-4 h-4 mr-2" />
             Featured Reels
@@ -278,12 +262,11 @@ const AdminDashboard = () => {
                           </tr>
                         ) : (
                           filteredApplications.map(app => (
-                            <tr 
+                            <tr
                               key={app._id}
                               onClick={() => setSelectedApp(app)}
-                              className={`border-b border-white/10 cursor-pointer transition ${
-                                selectedApp?._id === app._id ? 'bg-white/10' : 'hover:bg-white/5'
-                              }`}
+                              className={`border-b border-white/10 cursor-pointer transition ${selectedApp?._id === app._id ? 'bg-white/10' : 'hover:bg-white/5'
+                                }`}
                             >
                               <td className="px-4 py-3 text-sm">{app.fullName}</td>
                               <td className="px-4 py-3 text-sm text-gray-400">{app.position}</td>
@@ -321,7 +304,7 @@ const AdminDashboard = () => {
                 {selectedApp ? (
                   <div className="bg-white/5 border border-white/10 rounded-lg p-6 sticky top-6">
                     <h3 className="text-xl font-bold mb-4">Application Details</h3>
-                    
+
                     <div className="space-y-4 mb-6">
                       <div>
                         <p className="text-gray-400 text-sm mb-1">Full Name</p>
@@ -399,11 +382,10 @@ const AdminDashboard = () => {
                           <button
                             key={status}
                             onClick={() => handleUpdateStatus(selectedApp._id, status)}
-                            className={`w-full px-3 py-2 rounded text-sm font-medium transition capitalize ${
-                              selectedApp.applicationStatus === status
+                            className={`w-full px-3 py-2 rounded text-sm font-medium transition capitalize ${selectedApp.applicationStatus === status
                                 ? 'bg-cyan-500 text-black'
                                 : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
-                            }`}
+                              }`}
                           >
                             {status}
                           </button>
@@ -450,10 +432,7 @@ const AdminDashboard = () => {
           <CultureManager />
         )}
 
-        {/* Projects Tab */}
-        {activeTab === 'projects' && (
-          <ProjectManager />
-        )}
+
 
         {/* Reels Tab */}
         {activeTab === 'reels' && (

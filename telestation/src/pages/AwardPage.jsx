@@ -152,7 +152,7 @@ function AwardsSection({
             <ImageAwardCard
               key={`${p.category}-${p.name}-${idx}`}
               variant={cardVariant}
-              image={p.image || p.imageUrl}
+              image={p.imageUrl || p.image}
               alt={p.name || title}
               meta={`${p.month} ${p.year}`}
               name={p.name}

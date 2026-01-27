@@ -101,7 +101,7 @@ const TeamSection = () => {
               {/* Image */}
               <div className="relative h-80 overflow-hidden bg-gradient-to-br from-white/10 to-white/5">
                 <img
-                  src={member.image}
+                  src={member.imageUrl}
                   alt={member.name}
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                   loading="lazy"

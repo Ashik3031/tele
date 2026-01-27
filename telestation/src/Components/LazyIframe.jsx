@@ -27,10 +27,10 @@ function LazyIframe({ src, className, style, ...rest }) {
       {ready ? (
         <iframe
           src={src}
-          className="absolute inset-0 w-full h-full pointer-events-none"
+          className="absolute inset-0 w-full h-full"
           frameBorder="0"
           scrolling="no"
-          allow="encrypted-media; clipboard-write"
+          allow="encrypted-media; clipboard-write; autoplay"
           allowFullScreen
           loading="lazy"
           {...rest}
