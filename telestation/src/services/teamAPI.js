@@ -1,4 +1,6 @@
-const API_URL = '/api/team';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/team`;
 
 export const uploadTeamImage = async (file) => {
   try {

@@ -1,8 +1,10 @@
-const API_BASE = '/api/reels';
+import { API_BASE } from '../config/api';
+
+const API_BASE_URL = `${API_BASE}/reels`;
 
 export const getAllFeaturedReels = async () => {
   try {
-    const response = await fetch(`${API_BASE}`);
+    const response = await fetch(`${API_BASE_URL}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -13,7 +15,7 @@ export const getAllFeaturedReels = async () => {
 
 export const getAdminAllReels = async () => {
   try {
-    const response = await fetch(`${API_BASE}/admin/all`);
+    const response = await fetch(`${API_BASE_URL}/admin/all`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -24,7 +26,7 @@ export const getAdminAllReels = async () => {
 
 export const getReelById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE}/${id}`);
+    const response = await fetch(`${API_BASE_URL}/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -35,7 +37,7 @@ export const getReelById = async (id) => {
 
 export const createReel = async (reelData) => {
   try {
-    const response = await fetch(`${API_BASE}`, {
+    const response = await fetch(`${API_BASE_URL}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reelData),
@@ -50,7 +52,7 @@ export const createReel = async (reelData) => {
 
 export const updateReel = async (id, reelData) => {
   try {
-    const response = await fetch(`${API_BASE}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reelData),
@@ -65,7 +67,7 @@ export const updateReel = async (id, reelData) => {
 
 export const deleteReel = async (id) => {
   try {
-    const response = await fetch(`${API_BASE}/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'DELETE',
     });
     const data = await response.json();

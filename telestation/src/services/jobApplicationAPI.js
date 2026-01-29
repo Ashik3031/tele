@@ -1,4 +1,6 @@
-const API_URL = '/api/jobs';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/jobs`;
 
 export const jobApplicationAPI = {
   // Submit job application with resume

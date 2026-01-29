@@ -1,4 +1,6 @@
-const API_URL = '/api/projects';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/projects`;
 
 export const getAllFeaturedProjects = async () => {
   try {
@@ -11,7 +13,7 @@ export const getAllFeaturedProjects = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
@@ -32,7 +34,7 @@ export const getAdminAllProjects = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
@@ -53,7 +55,7 @@ export const getProjectById = async (id) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
@@ -75,7 +77,7 @@ export const createProject = async (projectData) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to create project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
@@ -97,7 +99,7 @@ export const updateProject = async (id, projectData) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to update project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();
@@ -118,7 +120,7 @@ export const deleteProject = async (id) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to delete project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return await response.json();

@@ -1,4 +1,6 @@
-const API_URL = '/api/culture';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/culture`;
 
 export const uploadCultureImage = async (file) => {
   try {

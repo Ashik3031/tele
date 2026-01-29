@@ -1,4 +1,6 @@
-const API_URL = '/api/awards';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/awards`;
 
 export const uploadAwardImage = async (file) => {
   try {

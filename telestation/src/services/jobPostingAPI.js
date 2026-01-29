@@ -1,4 +1,6 @@
-const API_URL = '/api/postings';
+import { API_BASE } from '../config/api';
+
+const API_URL = `${API_BASE}/postings`;
 
 export const jobPostingAPI = {
   // Get all active job postings (Public - for Career page)
