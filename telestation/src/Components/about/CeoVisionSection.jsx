@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CeoVisionSection() {
   const person = {
-    name: "Riveen",
+    name: "Rivin",
     role: "Managing Director",
     image: "/image/manager1.jpeg",
   };
@@ -51,7 +51,7 @@ export default function CeoVisionSection() {
           {/* RIGHT */}
           <div className="text-white w-full max-w-[640px] mx-auto lg:mx-0">
             <p className="text-white/85 italic leading-relaxed text-base md:text-lg lg:text-xl">
-              Riveen’s journey wasn’t built on shortcuts. He believes in
+              Rivin’s journey wasn’t built on shortcuts. He believes in
               consistency, clarity, and long-term value creation. Over the
               years, he has helped shape the brand with a people-first mindset,
               strong operational discipline, and a vision that keeps evolving
