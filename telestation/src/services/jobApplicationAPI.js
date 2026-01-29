@@ -1,42 +1,20 @@
-// Determine API URL based on environment
-let API_URL = 'http://localhost:5000/api'; // Default for local development
-
-if (import.meta.env.VITE_API_URL) {
-  API_URL = import.meta.env.VITE_API_URL;
-} else if (typeof window !== 'undefined') {
-  const hostname = window.location.hostname;
-  const protocol = window.location.protocol;
-  
-  // Production with domain
-  if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com') {
-    API_URL = `${protocol}//api.tspl-corp.com/api`;
-  }
-  // Production with server IP
-  else if (hostname === '72.61.238.90' || hostname.includes('72.61.238.90')) {
-    API_URL = 'http://72.61.238.90:5000/api';
-  }
-  // Local development
-  else if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    API_URL = 'http://localhost:5000/api';
-  }
-}
+const API_URL = '/api/jobs';
 
 export const jobApplicationAPI = {
   // Submit job application with resume
   submitApplication: async (formData) => {
     try {
-      const response = await fetch(`${API_URL}/jobs/apply`, {
+      const response = await fetch(`${API_URL}/apply`, {
         method: 'POST',
         credentials: 'include',
-        body: formData, // FormData handles multipart/form-data automatically
+        body: formData,
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      return data;
+      return await response.json();
     } catch (error) {
       console.error('Error submitting application:', error);
       throw error;
@@ -46,7 +24,7 @@ export const jobApplicationAPI = {
   // Get all applications (Admin)
   getAllApplications: async () => {
     try {
-      const response = await fetch(`${API_URL}/jobs/all`, {
+      const response = await fetch(`${API_URL}/all`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -66,7 +44,7 @@ export const jobApplicationAPI = {
   // Get single application by ID
   getApplication: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/jobs/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -86,7 +64,7 @@ export const jobApplicationAPI = {
   // Update application status (Admin)
   updateApplicationStatus: async (id, status) => {
     try {
-      const response = await fetch(`${API_URL}/jobs/${id}/status`, {
+      const response = await fetch(`${API_URL}/${id}/status`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -109,7 +87,7 @@ export const jobApplicationAPI = {
   // Delete application (Admin)
   deleteApplication: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/jobs/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

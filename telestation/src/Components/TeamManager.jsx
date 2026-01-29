@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, X } from 'lucide-react';
 import { getAllTeamMembers, createTeamMember, updateTeamMember, deleteTeamMember, uploadTeamImage } from '../services/teamAPI';
+import { resolveAsset } from '../utils/assetResolver';
 
 export default function TeamManager() {
   const [members, setMembers] = useState([]);
@@ -256,7 +257,7 @@ export default function TeamManager() {
                 {uploadingImage && <p className="text-sm text-cyan-400 mt-2">Uploading...</p>}
                 {formData.imageUrl && (
                   <div className="mt-2 flex items-center gap-2">
-                    <img src={formData.imageUrl} alt="Preview" className="h-12 w-12 rounded object-cover" />
+                    <img src={resolveAsset(formData.imageUrl)} alt="Preview" className="h-12 w-12 rounded object-cover" />
                     <p className="text-sm text-green-400">✓ Image uploaded</p>
                   </div>
                 )}
@@ -314,7 +315,7 @@ export default function TeamManager() {
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   {member.imageUrl && (
-                    <img src={member.imageUrl} alt={member.name} className="h-12 w-12 rounded-full object-cover" />
+                    <img src={resolveAsset(member.imageUrl)} alt={member.name} className="h-12 w-12 rounded-full object-cover" />
                   )}
                   <div>
                     <h3 className="text-lg font-semibold text-white">{member.name}</h3>

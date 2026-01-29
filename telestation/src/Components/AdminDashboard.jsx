@@ -7,6 +7,7 @@ import TeamManager from './TeamManager';
 import CultureManager from './CultureManager';
 import ProjectManager from './ProjectManager';
 import ReelManager from './ReelManager';
+import { resolveAsset } from '../utils/assetResolver';
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -119,8 +120,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('applications')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'applications'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Eye className="inline-block w-4 h-4 mr-2" />
@@ -129,8 +130,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('postings')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'postings'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Briefcase className="inline-block w-4 h-4 mr-2" />
@@ -139,8 +140,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('awards')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'awards'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Award className="inline-block w-4 h-4 mr-2" />
@@ -149,8 +150,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('team')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'team'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Users className="inline-block w-4 h-4 mr-2" />
@@ -159,8 +160,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('culture')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'culture'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Zap className="inline-block w-4 h-4 mr-2" />
@@ -170,8 +171,8 @@ const AdminDashboard = () => {
           <button
             onClick={() => setActiveTab('reels')}
             className={`pb-3 px-4 font-medium transition whitespace-nowrap ${activeTab === 'reels'
-                ? 'border-b-2 border-cyan-400 text-cyan-400'
-                : 'text-gray-400 hover:text-white'
+              ? 'border-b-2 border-cyan-400 text-cyan-400'
+              : 'text-gray-400 hover:text-white'
               }`}
           >
             <Film className="inline-block w-4 h-4 mr-2" />
@@ -362,7 +363,7 @@ const AdminDashboard = () => {
                         <div>
                           <p className="text-gray-400 text-sm mb-2">Resume</p>
                           <a
-                            href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/jobs/download/${selectedApp.resume.filename}`}
+                            href={resolveAsset(`/api/jobs/download/${selectedApp.resume.filename}`)}
                             download={selectedApp.resume.originalName}
                             className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-black px-3 py-2 rounded text-sm font-medium transition"
                           >
@@ -383,8 +384,8 @@ const AdminDashboard = () => {
                             key={status}
                             onClick={() => handleUpdateStatus(selectedApp._id, status)}
                             className={`w-full px-3 py-2 rounded text-sm font-medium transition capitalize ${selectedApp.applicationStatus === status
-                                ? 'bg-cyan-500 text-black'
-                                : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
+                              ? 'bg-cyan-500 text-black'
+                              : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                               }`}
                           >
                             {status}
