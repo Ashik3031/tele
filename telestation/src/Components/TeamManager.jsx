@@ -14,13 +14,7 @@ export default function TeamManager() {
   const [formData, setFormData] = useState({
     name: '',
     position: '',
-    department: '',
-    bio: '',
     imageUrl: '',
-    email: '',
-    phone: '',
-    linkedIn: '',
-    specialization: '',
     isActive: true,
   });
 
@@ -126,13 +120,7 @@ export default function TeamManager() {
     setFormData({
       name: '',
       position: '',
-      department: '',
-      bio: '',
       imageUrl: '',
-      email: '',
-      phone: '',
-      linkedIn: '',
-      specialization: '',
       isActive: true,
     });
     setEditingId(null);
@@ -202,46 +190,7 @@ export default function TeamManager() {
                 className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
                 required
               />
-              <input
-                type="text"
-                name="department"
-                value={formData.department}
-                onChange={handleInputChange}
-                placeholder="Department"
-                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-              />
-              <input
-                type="text"
-                name="specialization"
-                value={formData.specialization}
-                onChange={handleInputChange}
-                placeholder="Specialization"
-                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Phone"
-                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-              />
-              <input
-                type="url"
-                name="linkedIn"
-                value={formData.linkedIn}
-                onChange={handleInputChange}
-                placeholder="LinkedIn Profile"
-                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-              />
+
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -264,14 +213,7 @@ export default function TeamManager() {
               </div>
             </div>
 
-            <textarea
-              name="bio"
-              value={formData.bio}
-              onChange={handleInputChange}
-              placeholder="Bio"
-              rows="3"
-              className="w-full bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
-            />
+
 
             <label className="flex items-center gap-2">
               <input
@@ -322,12 +264,7 @@ export default function TeamManager() {
                     <p className="text-sm text-cyan-400">{member.position}</p>
                   </div>
                 </div>
-                {member.department && (
-                  <p className="text-sm text-gray-400">Dept: {member.department}</p>
-                )}
-                {member.specialization && (
-                  <p className="text-sm text-gray-400">Specialization: {member.specialization}</p>
-                )}
+
               </div>
               <div className="flex gap-2 ml-4">
                 <button
