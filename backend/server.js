@@ -55,6 +55,23 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'Backend is running', timestamp: new Date() });
 });
 
+// Debug route to see DB state
+app.get('/api/admin/debug-images', async (req, res) => {
+  try {
+    const TeamMember = require('./models/TeamMember');
+    const Award = require('./models/Award');
+    const LifeCulture = require('./models/LifeCulture');
+
+    const team = await TeamMember.find({}, 'name imageUrl');
+    const awards = await Award.find({}, 'name imageUrl image');
+    const culture = await LifeCulture.find({}, 'title imageUrl');
+
+    res.json({ team, awards, culture });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Error:', error);

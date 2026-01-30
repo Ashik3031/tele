@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { getAllCultureItems } from "../../services/cultureAPI";
+import { resolveAsset } from "../../utils/assetResolver";
 
 const LifeAtDigtelSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -113,15 +114,15 @@ const LifeAtDigtelSection = () => {
     },
   ];
 
-  const teamMembers = cultureItems.length > 0 
+  const teamMembers = cultureItems.length > 0
     ? cultureItems.slice(0, 10).map((item, idx) => ({
-        name: item.title,
-        role: item.category,
-        image: item.imageUrl || '/image/placeholder.jpeg',
-        color: ['bg-red-600', 'bg-yellow-500', 'bg-blue-600', 'bg-lime-500', 'bg-purple-600'][idx % 5],
-        quote: item.description || 'No description',
-        author: `${item.title} • ${item.category}`,
-      }))
+      name: item.title,
+      role: item.category,
+      image: item.imageUrl || '/image/placeholder.jpeg',
+      color: ['bg-red-600', 'bg-yellow-500', 'bg-blue-600', 'bg-lime-500', 'bg-purple-600'][idx % 5],
+      quote: item.description || 'No description',
+      author: `${item.title} • ${item.category}`,
+    }))
     : defaultTeam;
 
   const closeModal = () => setSelected(null);
@@ -190,16 +191,16 @@ const LifeAtDigtelSection = () => {
                 className={`relative overflow-hidden ${member.color} aspect-[3/4] group cursor-pointer rounded-xl shadow-xl`}
               >
                 <motion.img
-                  src={member.image}
+                  src={resolveAsset(member.image)}
                   alt={member.name}
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                 />
-                
+
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {/* Name overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                   <p className="text-white font-semibold text-sm">{member.name}</p>
@@ -330,7 +331,7 @@ const LifeAtDigtelSection = () => {
               <div className="h-full p-4 sm:p-6">
                 <div className="h-full grid gap-4">
                   <div className="relative w-full overflow-hidden rounded-2xl bg-black" style={{ border: `1px solid ${BRAND.accent}22` }}>
-                    <img src={selected.image} alt={selected.name} draggable={false} className="w-full h-full object-cover object-center" style={{ maxHeight: "clamp(240px, 48vh, 520px)" }} />
+                    <img src={resolveAsset(selected.image)} alt={selected.name} draggable={false} className="w-full h-full object-cover object-center" style={{ maxHeight: "clamp(240px, 48vh, 520px)" }} />
                   </div>
 
                   <div className="min-w-0 flex flex-col justify-center">
@@ -458,15 +459,14 @@ function ImageCard({ member, index, activeIndex, setActiveIndex, setSelected, he
       transition={{ duration: 0.6, delay }}
       whileHover={{ scale: 1.03, y: -8 }}
       whileTap={{ scale: 0.98 }}
-      className={`relative overflow-hidden ${member.color} group cursor-pointer rounded-xl shadow-2xl transition-all duration-500 ${
-        activeIndex === index ? "z-20 ring-2 ring-white/30" : "z-10"
-      } ${activeIndex !== null && activeIndex !== index ? "opacity-60" : "opacity-100"}`}
+      className={`relative overflow-hidden ${member.color} group cursor-pointer rounded-xl shadow-2xl transition-all duration-500 ${activeIndex === index ? "z-20 ring-2 ring-white/30" : "z-10"
+        } ${activeIndex !== null && activeIndex !== index ? "opacity-60" : "opacity-100"}`}
       style={{ height }}
       onMouseEnter={() => setActiveIndex(index)}
       onMouseLeave={() => setActiveIndex(null)}
     >
       <motion.img
-        src={member.image}
+        src={resolveAsset(member.image)}
         alt={member.name}
         className="w-full h-full object-cover"
         whileHover={{ scale: 1.15 }}

@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { getAllTeamMembers } from "../../services/teamAPI";
+import { resolveAsset } from "../../utils/assetResolver";
 
 const BRAND = {
   accent: "#37C6D9",
@@ -72,17 +73,16 @@ const TeamSection = () => {
 
         {/* Team Grid */}
         <div
-  className={`
+          className={`
     grid gap-6
     grid-cols-2
     md:grid-cols-3
-    ${
-      !showAll && initialCount === 4
-        ? "lg:grid-cols-4"
-        : "lg:grid-cols-5"
-    }
+    ${!showAll && initialCount === 4
+              ? "lg:grid-cols-4"
+              : "lg:grid-cols-5"
+            }
   `}
->
+        >
 
           {visibleTeam.map((member, idx) => (
             <div
@@ -101,7 +101,7 @@ const TeamSection = () => {
               {/* Image */}
               <div className="relative h-80 overflow-hidden bg-gradient-to-br from-white/10 to-white/5">
                 <img
-                  src={member.imageUrl}
+                  src={resolveAsset(member.imageUrl)}
                   alt={member.name}
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                   loading="lazy"
