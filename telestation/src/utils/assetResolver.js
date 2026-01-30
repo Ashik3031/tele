@@ -32,9 +32,9 @@ export const resolveAsset = (path) => {
 const getApiBaseUrl = () => {
     const hostname = window.location.hostname;
 
-    // Production domain
+    // Production domain - use same origin (nginx proxies /api/* to backend)
     if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com') {
-        return 'https://api.tspl-corp.com';
+        return window.location.origin; // https://www.tspl-corp.com
     }
 
     // Production IP
