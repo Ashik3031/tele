@@ -39,7 +39,7 @@ export default function LogoShowcase({
           </p> */}
 
           <h3 className="mt-1 text-[20px] leading-tight sm:text-2xl md:text-3xl font-extrabold  uppercase tracking-tight px-2">
-           Brands We Own & Operate
+           Our Operated Brands
           </h3>
 
           {/* <p className="mt-2 max-w-[38rem] text-[13px] leading-relaxed sm:text-base text-white/65 px-3">
