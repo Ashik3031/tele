@@ -1,30 +1,10 @@
-const BASE_URLS = [
-  'http://localhost:5000',
-  'http://72.61.238.90:5000',
-  'https://api.tspl-corp.com',
-];
+import { API_BASE } from '../config/api';
 
-const getBaseUrl = () => {
-  if (typeof window === 'undefined') return BASE_URLS[0];
-  
-  const host = window.location.hostname;
-  
-  if (host === 'localhost' || host === '127.0.0.1') {
-    return BASE_URLS[0];
-  }
-  
-  if (host.includes('72.61.238.90')) {
-    return BASE_URLS[1];
-  }
-  
-  return BASE_URLS[2];
-};
-
-const API_BASE = getBaseUrl();
+const API_BASE_URL = `${API_BASE}/reels`;
 
 export const getAllFeaturedReels = async () => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels`);
+    const response = await fetch(`${API_BASE_URL}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -35,7 +15,7 @@ export const getAllFeaturedReels = async () => {
 
 export const getAdminAllReels = async () => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels/admin/all`);
+    const response = await fetch(`${API_BASE_URL}/admin/all`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -46,7 +26,7 @@ export const getAdminAllReels = async () => {
 
 export const getReelById = async (id) => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels/${id}`);
+    const response = await fetch(`${API_BASE_URL}/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -57,7 +37,7 @@ export const getReelById = async (id) => {
 
 export const createReel = async (reelData) => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels`, {
+    const response = await fetch(`${API_BASE_URL}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reelData),
@@ -72,7 +52,7 @@ export const createReel = async (reelData) => {
 
 export const updateReel = async (id, reelData) => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reelData),
@@ -87,7 +67,7 @@ export const updateReel = async (id, reelData) => {
 
 export const deleteReel = async (id) => {
   try {
-    const response = await fetch(`${API_BASE}/api/reels/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'DELETE',
     });
     const data = await response.json();

@@ -1,25 +1,10 @@
-// Helper to get the correct API URL
-const getApiUrl = () => {
-  const hostname = window.location.hostname;
+import { API_BASE } from '../config/api';
 
-  if (hostname === '72.61.238.90' || hostname.startsWith('72.61.238.90')) {
-    return 'http://72.61.238.90:5000';
-  }
+const API_URL = `${API_BASE}/projects`;
 
-  if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com' || hostname.includes('tspl-corp.com')) {
-    return 'https://api.tspl-corp.com';
-  }
-
-  return 'http://localhost:5000';
-};
-
-const BASE_URL = getApiUrl();
-const PROJECTS_ENDPOINT = `${BASE_URL}/api/projects`;
-
-// Fetch all featured projects
 export const getAllFeaturedProjects = async () => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}`, {
+    const response = await fetch(`${API_URL}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -28,21 +13,19 @@ export const getAllFeaturedProjects = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching projects:', error);
     throw error;
   }
 };
 
-// Fetch all projects (admin)
 export const getAdminAllProjects = async () => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}/admin/all`, {
+    const response = await fetch(`${API_URL}/admin/all`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -51,21 +34,19 @@ export const getAdminAllProjects = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching projects:', error);
     throw error;
   }
 };
 
-// Get single project
 export const getProjectById = async (id) => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -74,21 +55,19 @@ export const getProjectById = async (id) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching project:', error);
     throw error;
   }
 };
 
-// Create project
 export const createProject = async (projectData) => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}`, {
+    const response = await fetch(`${API_URL}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -98,21 +77,19 @@ export const createProject = async (projectData) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to create project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error creating project:', error);
     throw error;
   }
 };
 
-// Update project
 export const updateProject = async (id, projectData) => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -122,21 +99,19 @@ export const updateProject = async (id, projectData) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to update project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error updating project:', error);
     throw error;
   }
 };
 
-// Delete project
 export const deleteProject = async (id) => {
   try {
-    const response = await fetch(`${PROJECTS_ENDPOINT}/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -145,11 +120,10 @@ export const deleteProject = async (id) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to delete project: ${response.statusText}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error deleting project:', error);
     throw error;

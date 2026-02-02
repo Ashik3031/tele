@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, X } from 'lucide-react';
 import { getAllAwards, createAward, updateAward, deleteAward, uploadAwardImage } from '../services/awardAPI';
+import { resolveAsset } from '../utils/assetResolver';
 
 export default function AwardsManager() {
   const [awards, setAwards] = useState([]);
@@ -281,7 +282,7 @@ export default function AwardsManager() {
                 )}
                 {formData.imageUrl && (
                   <div className="mt-2 flex items-center gap-2">
-                    <img src={formData.imageUrl} alt="Preview" className="h-12 w-12 rounded object-cover" />
+                    <img src={resolveAsset(formData.imageUrl)} alt="Preview" className="h-12 w-12 rounded object-cover" />
                     <p className="text-sm text-green-400">✓ Image uploaded</p>
                   </div>
                 )}

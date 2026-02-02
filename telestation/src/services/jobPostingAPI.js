@@ -1,31 +1,12 @@
-// Determine API URL based on environment
-let API_URL = 'http://localhost:5000/api'; // Default for local development
+import { API_BASE } from '../config/api';
 
-if (import.meta.env.VITE_API_URL) {
-  API_URL = import.meta.env.VITE_API_URL;
-} else if (typeof window !== 'undefined') {
-  const hostname = window.location.hostname;
-  const protocol = window.location.protocol;
-  
-  // Production with domain
-  if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com') {
-    API_URL = `${protocol}//api.tspl-corp.com/api`;
-  }
-  // Production with server IP
-  else if (hostname === '72.61.238.90' || hostname.includes('72.61.238.90')) {
-    API_URL = 'http://72.61.238.90:5000/api';
-  }
-  // Local development
-  else if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    API_URL = 'http://localhost:5000/api';
-  }
-}
+const API_URL = `${API_BASE}/postings`;
 
 export const jobPostingAPI = {
   // Get all active job postings (Public - for Career page)
   getAllPostings: async () => {
     try {
-      const response = await fetch(`${API_URL}/postings`, {
+      const response = await fetch(`${API_URL}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -45,7 +26,7 @@ export const jobPostingAPI = {
   // Get single job posting by ID
   getPostingById: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/postings/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -65,7 +46,7 @@ export const jobPostingAPI = {
   // Create new job posting (Admin)
   createPosting: async (postingData) => {
     try {
-      const response = await fetch(`${API_URL}/postings`, {
+      const response = await fetch(`${API_URL}`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -86,7 +67,7 @@ export const jobPostingAPI = {
   // Update job posting (Admin)
   updatePosting: async (id, postingData) => {
     try {
-      const response = await fetch(`${API_URL}/postings/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -107,7 +88,7 @@ export const jobPostingAPI = {
   // Delete job posting (Admin)
   deletePosting: async (id) => {
     try {
-      const response = await fetch(`${API_URL}/postings/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -127,7 +108,7 @@ export const jobPostingAPI = {
   // Get all postings including inactive (Admin)
   getAllPostingsAdmin: async () => {
     try {
-      const response = await fetch(`${API_URL}/postings/admin/all`, {
+      const response = await fetch(`${API_URL}/admin/all`, {
         method: 'GET',
         credentials: 'include',
         headers: {

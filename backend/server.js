@@ -16,17 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 // CORS Configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://localhost',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173',
-    'http://72.61.238.90',
-    'https://www.tspl-corp.com',
-    'https://tspl-corp.com',
-    'https://admin.tspl-corp.com'
-  ],
+  origin: true, // Reflect request origin, or use environment variable if needed
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -63,6 +53,23 @@ app.use('/api/awards', awardRoutes);
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'Backend is running', timestamp: new Date() });
+});
+
+// Debug route to see DB state
+app.get('/api/admin/debug-images', async (req, res) => {
+  try {
+    const TeamMember = require('./models/TeamMember');
+    const Award = require('./models/Award');
+    const LifeCulture = require('./models/LifeCulture');
+
+    const team = await TeamMember.find({}, 'name imageUrl');
+    const awards = await Award.find({}, 'name imageUrl image');
+    const culture = await LifeCulture.find({}, 'title imageUrl');
+
+    res.json({ team, awards, culture });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Error handling middleware

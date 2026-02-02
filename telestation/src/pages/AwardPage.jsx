@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getAllAwards } from "../services/awardAPI";
+import { resolveAsset } from "../utils/assetResolver";
 
 const BRAND = { accent: "#37C6D9" };
 const EASE = [0.22, 1, 0.36, 1];
@@ -213,7 +214,7 @@ function ImageAwardCard({
             {image && (
               <>
                 <img
-                  src={image}
+                  src={resolveAsset(image)}
                   alt=""
                   aria-hidden="true"
                   className="absolute inset-0 h-full w-full object-cover blur-2xl opacity-20 scale-110"
@@ -221,7 +222,7 @@ function ImageAwardCard({
                 <div className="absolute inset-0 bg-black/35" />
 
                 <motion.img
-                  src={image}
+                  src={resolveAsset(image)}
                   alt={alt}
                   className="absolute inset-0 h-full w-full object-contain object-center p-0 sm:p-1"
                   whileHover={{ scale: 1.02 }}
@@ -236,7 +237,7 @@ function ImageAwardCard({
             {image && (
               <>
                 <motion.img
-                  src={image}
+                  src={resolveAsset(image)}
                   alt={alt}
                   className="absolute inset-0 h-full w-full object-cover object-center"
                   whileHover={{ scale: 1.06 }}

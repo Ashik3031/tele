@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Plus, Trash2, Edit, Eye, EyeOff, Star, StarOff, Save, X } from "lucide-react";
 import { getAdminAllReels, createReel, updateReel, deleteReel } from "../services/reelAPI";
+import { resolveAsset } from "../utils/assetResolver";
 
 export default function ReelAdminPanel() {
   const [reels, setReels] = useState([]);
@@ -313,7 +314,7 @@ export default function ReelAdminPanel() {
                       <div className="w-16 h-20 rounded-lg overflow-hidden bg-gray-800 border border-gray-700">
                         {reel.thumbnailUrl ? (
                           <img
-                            src={reel.thumbnailUrl}
+                            src={resolveAsset(reel.thumbnailUrl)}
                             alt={reel.title}
                             className="w-full h-full object-cover"
                           />

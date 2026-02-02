@@ -3,6 +3,7 @@ import { ExternalLink, X } from "lucide-react";
 import LazyIframe from "./LazyIframe";
 import ReelCardLoader from "./ReelCardLoader";
 import { getAllFeaturedReels } from "../services/reelAPI";
+import { resolveAsset } from "../utils/assetResolver";
 
 export default function VideoTestimonials() {
   const [reels, setReels] = useState([]);
@@ -73,6 +74,14 @@ export default function VideoTestimonials() {
               >
                 {/* SAME CARD DESIGN */}
                 <div className="relative aspect-[3/4.5] w-full overflow-hidden border border-[#6EF1F7] bg-zinc-900">
+                  {reel.thumbnailUrl && (
+                    <img
+                      src={resolveAsset(reel.thumbnailUrl)}
+                      alt={reel.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      onLoad={() => markLoaded(reel._id)}
+                    />
+                  )}
                   {!loadedMap[reel._id] && <ReelCardLoader logoSrc="/logo1.png" />}
 
                   {/* Mobile */}

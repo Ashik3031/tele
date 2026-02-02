@@ -1,32 +1,13 @@
-// Helper to get the correct API URL
-const getApiUrl = () => {
-  const hostname = window.location.hostname;
-  const protocol = window.location.protocol;
+import { API_BASE } from '../config/api';
 
-  // Production IP
-  if (hostname === '72.61.238.90' || hostname.startsWith('72.61.238.90')) {
-    return 'http://72.61.238.90:5000';
-  }
+const API_URL = `${API_BASE}/awards`;
 
-  // Production domain
-  if (hostname === 'www.tspl-corp.com' || hostname === 'tspl-corp.com' || hostname.includes('tspl-corp.com')) {
-    return 'https://api.tspl-corp.com';
-  }
-
-  // Development
-  return 'http://localhost:5000';
-};
-
-const BASE_URL = getApiUrl();
-const AWARDS_ENDPOINT = `${BASE_URL}/api/awards`;
-
-// Upload award image
 export const uploadAwardImage = async (file) => {
   try {
     const formData = new FormData();
     formData.append('image', file);
 
-    const response = await fetch(`${AWARDS_ENDPOINT}/upload`, {
+    const response = await fetch(`${API_URL}/upload`, {
       method: 'POST',
       credentials: 'include',
       body: formData,
@@ -36,24 +17,16 @@ export const uploadAwardImage = async (file) => {
       throw new Error(`Failed to upload image: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    
-    // Convert relative path to full URL
-    if (data.success && data.data && data.data.imageUrl) {
-      data.data.imageUrl = `${BASE_URL}${data.data.imageUrl}`;
-    }
-    
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error uploading image:', error);
     throw error;
   }
 };
 
-// Fetch all awards
 export const getAllAwards = async () => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}`, {
+    const response = await fetch(`${API_URL}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -65,38 +38,16 @@ export const getAllAwards = async () => {
       throw new Error(`Failed to fetch awards: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    
-    // Convert relative image URLs to absolute
-    if (data.success && data.data) {
-      const convertImageUrls = (awards) => {
-        return awards.map(award => ({
-          ...award,
-          imageUrl: award.imageUrl && !award.imageUrl.startsWith('http') 
-            ? `${BASE_URL}${award.imageUrl}` 
-            : award.imageUrl
-        }));
-      };
-      
-      if (data.data.employeeOfMonth) {
-        data.data.employeeOfMonth = convertImageUrls(data.data.employeeOfMonth);
-      }
-      if (data.data.targetAchieved) {
-        data.data.targetAchieved = convertImageUrls(data.data.targetAchieved);
-      }
-    }
-    
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching awards:', error);
     throw error;
   }
 };
 
-// Fetch awards by category
 export const getAwardsByCategory = async (category) => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}/category/${category}`, {
+    const response = await fetch(`${API_URL}/category/${category}`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -108,18 +59,16 @@ export const getAwardsByCategory = async (category) => {
       throw new Error(`Failed to fetch awards: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching awards:', error);
     throw error;
   }
 };
 
-// Create new award (Admin)
 export const createAward = async (awardData) => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}`, {
+    const response = await fetch(`${API_URL}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -132,18 +81,16 @@ export const createAward = async (awardData) => {
       throw new Error(`Failed to create award: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error creating award:', error);
     throw error;
   }
 };
 
-// Update award (Admin)
 export const updateAward = async (awardId, awardData) => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}/${awardId}`, {
+    const response = await fetch(`${API_URL}/${awardId}`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -156,18 +103,16 @@ export const updateAward = async (awardId, awardData) => {
       throw new Error(`Failed to update award: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error updating award:', error);
     throw error;
   }
 };
 
-// Delete award (Admin)
 export const deleteAward = async (awardId) => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}/${awardId}`, {
+    const response = await fetch(`${API_URL}/${awardId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -179,18 +124,16 @@ export const deleteAward = async (awardId) => {
       throw new Error(`Failed to delete award: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error deleting award:', error);
     throw error;
   }
 };
 
-// Fetch all awards (Admin - including inactive)
 export const getAdminAllAwards = async () => {
   try {
-    const response = await fetch(`${AWARDS_ENDPOINT}/admin/all`, {
+    const response = await fetch(`${API_URL}/admin/all`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -202,8 +145,7 @@ export const getAdminAllAwards = async () => {
       throw new Error(`Failed to fetch awards: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching awards:', error);
     throw error;
