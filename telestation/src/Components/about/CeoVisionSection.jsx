@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CeoVisionSection() {
   const person = {
-    name: "Rivin",
+    name: "Rivin K Baioth",
     role: "Managing Director",
     image: "/image/manager1.jpeg",
   };
