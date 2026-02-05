@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Rocket, CheckCircle2, ArrowRight } from "lucide-react";
-import emailjs from "@emailjs/browser";
+
 import { jobApplicationAPI } from "../../services/jobApplicationAPI";
 
 const BRAND = {
@@ -55,7 +55,7 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
 
     const file = formRef.current?.resume?.files?.[0];
     if (!file) return alert("Please upload your resume!");
-    
+
     if (file.size > MAX_FILE_SIZE) {
       return alert(`File size is ${(file.size / (1024 * 1024)).toFixed(2)}MB. Maximum allowed is 10MB.`);
     }
@@ -83,17 +83,7 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
         formRef.current.reset();
         setResume(null);
 
-        // Also send email notification (optional)
-        try {
-          await emailjs.sendForm(
-            import.meta.env.VITE_EMAILJS_SERVICE_ID,
-            import.meta.env.VITE_EMAILJS_CAREERS_TEMPLATE_ID,
-            formRef.current,
-            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-          );
-        } catch (emailError) {
-          console.warn('Email notification failed, but application was saved:', emailError);
-        }
+
 
         setTimeout(() => setSubmitted(false), 3000);
       } else {
@@ -144,9 +134,9 @@ const CareersForm = ({ variant = "card", jobTitle, jobType, jobLocation }) => {
       >
         {/* hidden time param for template */}
         <input type="hidden" name="time" value="" />
-  <input type="hidden" name="jobTitle" value={jobTitle || ""} />
-  <input type="hidden" name="jobType" value={jobType || ""} />
-  <input type="hidden" name="jobLocation" value={jobLocation || ""} />
+        <input type="hidden" name="jobTitle" value={jobTitle || ""} />
+        <input type="hidden" name="jobType" value={jobType || ""} />
+        <input type="hidden" name="jobLocation" value={jobLocation || ""} />
 
 
 

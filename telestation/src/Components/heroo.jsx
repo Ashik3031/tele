@@ -4,13 +4,13 @@ import { hyperspeedBlackPreset } from "./config/hyperspeedPresets"; // adjust pa
 import { useMemo } from "react";
 
 export default function HeroSection() {
- const effectOptions = useMemo(() => ({
-  ...hyperspeedBlackPreset.one,
-  colors: { ...hyperspeedBlackPreset.one.colors, background: 0x000000 },
-}), []);
+  const effectOptions = useMemo(() => ({
+    ...hyperspeedBlackPreset.one,
+    colors: { ...hyperspeedBlackPreset.one.colors, background: 0x000000 },
+  }), []);
 
   return (
-    <section className="relative w-full h-[100svh] md:h-screen overflow-hidden bg-white">
+    <section className="relative w-full h-[100svh] md:h-screen overflow-hidden bg-black">
       <PulseNavbar />
 
       {/* Background */}
@@ -36,22 +36,22 @@ export default function HeroSection() {
           px-4 text-center
         "
       >
-       <h1 className="font-poppins font-extrabold uppercase tracking-tight leading-[0.95]">
-  <span className="block text-4xl sm:text-5xl md:text-7xl text-white">
-    Connecting
-  </span>
-  <span className="block text-4xl sm:text-5xl md:text-7xl text-white">
-    Business
-  </span>
-  <span className="block mt-2 text-4xl sm:text-5xl md:text-7xl text-[#37C6D9] drop-shadow-[0_0_18px_rgba(55,198,217,0.35)]">
-    Better
-  </span>
-  <span className="mt-6 block h-[2px] w-16 sm:w-20 mx-auto bg-[#37C6D9]/80 rounded-full" />
-</h1>
+        <h1 className="font-poppins font-extrabold uppercase tracking-tight leading-[0.95]">
+          <span className="block text-4xl sm:text-5xl md:text-7xl text-white">
+            Connecting
+          </span>
+          <span className="block text-4xl sm:text-5xl md:text-7xl text-white">
+            Business
+          </span>
+          <span className="block mt-2 text-4xl sm:text-5xl md:text-7xl text-[#37C6D9] drop-shadow-[0_0_18px_rgba(55,198,217,0.35)]">
+            Better
+          </span>
+          <span className="mt-6 block h-[2px] w-16 sm:w-20 mx-auto bg-[#37C6D9]/80 rounded-full" />
+        </h1>
 
-<p className="mt-4 text-sm sm:text-base md:text-lg text-white max-w-2xl">
-  End-to-end BPO and telecom services trusted by leading providers.
-</p>
+        <p className="mt-4 text-sm sm:text-base md:text-lg text-white max-w-2xl">
+          End-to-end BPO and telecom services trusted by leading providers.
+        </p>
 
 
         {/* <div className="mt-8 w-full max-w-xs sm:max-w-md">
