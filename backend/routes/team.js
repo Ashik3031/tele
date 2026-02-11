@@ -68,8 +68,8 @@ router.post('/upload', upload.single('image'), (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const members = await TeamMember.find({ isActive: true })
-      .sort({ createdAt: -1 });
-    
+      .sort({ order: 1, createdAt: -1 });
+
     res.status(200).json({
       success: true,
       data: members,
@@ -110,7 +110,7 @@ router.get('/:id', async (req, res) => {
 // Create team member (Admin)
 router.post('/', async (req, res) => {
   try {
-    const { name, position, department, bio, imageUrl, email, phone, linkedIn, specialization } = req.body;
+    const { name, position, department, bio, imageUrl, email, phone, linkedIn, specialization, order } = req.body;
 
     if (!name || !position) {
       return res.status(400).json({
@@ -129,6 +129,7 @@ router.post('/', async (req, res) => {
       phone: phone || '',
       linkedIn: linkedIn || '',
       specialization: specialization || '',
+      order: order || 0,
       isActive: true
     });
 
@@ -150,7 +151,7 @@ router.post('/', async (req, res) => {
 // Update team member (Admin)
 router.put('/:id', async (req, res) => {
   try {
-    const { name, position, department, bio, imageUrl, email, phone, linkedIn, specialization, isActive } = req.body;
+    const { name, position, department, bio, imageUrl, email, phone, linkedIn, specialization, order, isActive } = req.body;
 
     const member = await TeamMember.findById(req.params.id);
     if (!member) {
@@ -169,6 +170,7 @@ router.put('/:id', async (req, res) => {
     if (phone !== undefined) member.phone = phone;
     if (linkedIn !== undefined) member.linkedIn = linkedIn;
     if (specialization !== undefined) member.specialization = specialization;
+    if (order !== undefined) member.order = order;
     if (isActive !== undefined) member.isActive = isActive;
 
     const updatedMember = await member.save();
@@ -214,7 +216,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/admin/all', async (req, res) => {
   try {
     const members = await TeamMember.find()
-      .sort({ createdAt: -1 });
+      .sort({ order: 1, createdAt: -1 });
     res.status(200).json({
       success: true,
       data: members,

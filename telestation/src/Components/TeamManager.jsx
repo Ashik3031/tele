@@ -15,6 +15,7 @@ export default function TeamManager() {
     name: '',
     position: '',
     imageUrl: '',
+    order: 0,
     isActive: true,
   });
 
@@ -121,6 +122,7 @@ export default function TeamManager() {
       name: '',
       position: '',
       imageUrl: '',
+      order: 0,
       isActive: true,
     });
     setEditingId(null);
@@ -189,6 +191,14 @@ export default function TeamManager() {
                 placeholder="Position *"
                 className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
                 required
+              />
+              <input
+                type="number"
+                name="order"
+                value={formData.order}
+                onChange={handleInputChange}
+                placeholder="Order Number (lower shows first)"
+                className="bg-slate-800 border border-slate-600 text-white px-3 py-2 rounded"
               />
 
 
@@ -261,7 +271,12 @@ export default function TeamManager() {
                   )}
                   <div>
                     <h3 className="text-lg font-semibold text-white">{member.name}</h3>
-                    <p className="text-sm text-cyan-400">{member.position}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm text-cyan-400">{member.position}</p>
+                      <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-slate-700">
+                        Order: {member.order || 0}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

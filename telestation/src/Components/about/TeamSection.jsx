@@ -126,7 +126,7 @@ const TeamSection = () => {
                     {member.name}
                   </h3>
                   <p className="text-sm font-medium" style={{ color: BRAND.accent }}>
-                    {member.role}
+                    {member.position}
                   </p>
                 </div>
               </div>
